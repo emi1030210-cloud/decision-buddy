@@ -41,6 +41,8 @@ All four share the `DuckBuddy` mascot exported from `BuyFlow.tsx` and ask one sc
 
 The app is client-side and requires no authentication or backend.
 
+The browser tab icon is `app/icon.svg`. There is no social share image yet: drop a 1200x630 `app/opengraph-image.png` into `app/` (and the same file as `app/twitter-image.png`) and Next will serve it and emit the `og:image` tags automatically. Set `NEXT_PUBLIC_SITE_URL` if you want those URLs pinned to a custom domain rather than Vercel's.
+
 History is stored under the browser `localStorage` key `buddy-history` as an array of `{ id, type, title, result, date, mode }` objects. It stays on the device and can be deleted item by item.
 
 ## Run locally

@@ -1,8 +1,10 @@
 import './globals.css'
-// metadataBase is what turns the generated og image into an absolute URL, and it is
-// baked in at build time because this page is statically prerendered. Preference
-// order: a domain you pin yourself, then Vercel's stable production domain, then the
-// per-deployment URL, then local dev.
+// No share image yet. Drop a 1200x630 app/opengraph-image.png (and the same file as
+// app/twitter-image.png) in and Next picks it up on its own — no code needed here.
+// metadataBase is what makes that image's URL absolute, and it is baked in at build
+// time because this page is statically prerendered, so a runtime env var is too late.
+// Preference order: a domain you pin yourself, then Vercel's stable production
+// domain, then the per-deployment URL, then local dev.
 const host=process.env.VERCEL_PROJECT_PRODUCTION_URL??process.env.VERCEL_URL
 const siteUrl=process.env.NEXT_PUBLIC_SITE_URL??(host?`https://${host}`:'http://localhost:3000')
 const title='Decision Buddy'
