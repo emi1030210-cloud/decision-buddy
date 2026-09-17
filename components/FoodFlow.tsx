@@ -2,7 +2,6 @@
 import { useMemo, useState } from "react";
 import { DuckBuddy, DuckState } from "./BuyFlow";
 import s from "./FoodFlow.module.css";
-import { duckReactions } from "@/lib/duckReactions";
 import { scoreFood } from "@/lib/decisions";
 type Priority = "budget" | "health" | "convenience" | "craving";
 const priorities: {
@@ -261,7 +260,7 @@ export default function FoodFlow({
   if (screen === "gut")
     return (
       <section className={s.flow}>
-        <DuckBuddy state={duckReactions.food.rejected} />
+        <DuckBuddy state="i-knew-it" />
         <h1>Okay, gut check.</h1>
         <p className={s.sub}>Is there one you secretly want?</p>
         <div className={s.choices}>

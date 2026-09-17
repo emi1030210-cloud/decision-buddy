@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import s from "./BuyFlow.module.css";
-import { duckReactions } from "@/lib/duckReactions";
 import { scoreBuy } from "@/lib/decisions";
 
 export type DuckState =
@@ -535,7 +534,7 @@ export default function BuyFlow({
       return (
         <section className={s.flow}>
           <div className={`${s.verdict} ${s.rejection}`}>
-            <DuckBuddy state={duckReactions.result.rejected} />
+            <DuckBuddy state="i-knew-it" />
             <h1>Oh? 👀</h1>
             <p>Maybe you already knew what you wanted.</p>
             <div className={s.verdictActions}>
