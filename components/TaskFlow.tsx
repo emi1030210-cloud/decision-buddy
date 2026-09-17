@@ -100,7 +100,11 @@ export default function TaskFlow({
   const [tasks, setTasks] = useState<Task[]>([emptyTask(), emptyTask()]);
   const [ti, setTi] = useState(0);
   const [available, setAvailable] = useState(2);
-  const named = tasks.filter((t) => t.name.trim());
+  // trimmed here so a stray space never reaches the ranking, the saved
+  // history entry or the next screen's heading — same as the other flows
+  const named = tasks
+    .filter((t) => t.name.trim())
+    .map((t) => ({ ...t, name: t.name.trim() }));
   const ranked = rankTasks(named, available);
   const update = (i: number, patch: Partial<Task>) =>
     setTasks(tasks.map((t, j) => (j === i ? { ...t, ...patch } : t)));
