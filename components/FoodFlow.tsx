@@ -237,8 +237,8 @@ export default function FoodFlow({
         <h1>{current.question}</h1>
         <p className={s.sub}>One tap. Don’t overthink it.</p>
         <div className={s.choices}>
-          {clean.map((o) => (
-            <button className={s.choice} key={o} onClick={() => choose(o)}>
+          {clean.map((o, i) => (
+            <button className={s.choice} key={i} onClick={() => choose(o)}>
               <span>{emoji(o)}</span>
               {o}
             </button>
@@ -283,10 +283,10 @@ export default function FoodFlow({
         <DuckBuddy state="curious" />
         <h1>Which one?</h1>
         <div className={s.choices}>
-          {clean.map((o) => (
+          {clean.map((o, i) => (
             <button
               className={s.choice}
-              key={o}
+              key={i}
               onClick={() => {
                 setSecret(o);
                 decide(scores, o);
@@ -320,10 +320,10 @@ export default function FoodFlow({
             <div className={s.choices}>
               {clean
                 .filter((o) => o !== winner)
-                .map((o) => (
+                .map((o, i) => (
                   <button
                     className={s.choice}
-                    key={o}
+                    key={i}
                     onClick={() => {
                       setWinner(o);
                       setScreen("result");

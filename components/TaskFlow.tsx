@@ -294,7 +294,7 @@ export default function TaskFlow({
         <p className={s.message}>Your deadline has entered the chat.</p>
         <div className={s.ranking}>
           {ranked.map((t, i) => (
-            <div className={`${s.rank} ${i === 0 ? s.top : ""}`} key={t.name}>
+            <div className={`${s.rank} ${i === 0 ? s.top : ""}`} key={i}>
               <b>{i === 0 ? "🔥" : i + 1}</b>
               <div>
                 <h2>{t.name}</h2>
@@ -316,8 +316,8 @@ export default function TaskFlow({
         </div>
         <details className={s.details}>
           <summary>Why this order?</summary>
-          {ranked.map((t) => (
-            <div key={t.name}>
+          {ranked.map((t, i) => (
+            <div key={i}>
               <span>{t.name}</span>
               <b>{t.score}</b>
             </div>

@@ -218,7 +218,7 @@ export default function CompareFlow({
           />
           {clean.map((o, oi) => (
             <Pills
-              key={o}
+              key={oi}
               label={`${o} on ${c.name.toLowerCase()}`}
               hints={["weak", "great"]}
               value={c.ratings[oi] ?? 3}
@@ -266,7 +266,7 @@ export default function CompareFlow({
         </p>
         <div className={s.ranking}>
           {results.slice(1).map((r, i) => (
-            <div className={s.rank} key={r.name}>
+            <div className={s.rank} key={i}>
               <b>{i + 2}</b>
               <div>
                 <h2>{r.name}</h2>
@@ -277,8 +277,8 @@ export default function CompareFlow({
         </div>
         <details className={s.details}>
           <summary>Show the math</summary>
-          {criteria.map((c) => (
-            <div key={c.name}>
+          {criteria.map((c, i) => (
+            <div key={i}>
               <span>
                 {c.name} × {c.weight}
               </span>
