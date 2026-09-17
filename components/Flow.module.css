@@ -1,0 +1,350 @@
+/* Shared by TaskFlow and CompareFlow. Same visual vocabulary as
+   BuyFlow.module.css / FoodFlow.module.css: soft cards, 4px drop shadow,
+   #f2ce58 accent, tap targets instead of sliders and dropdowns. */
+.flow {
+  max-width: 660px;
+  margin: 0 auto;
+  padding: 35px 18px 70px;
+  text-align: center;
+}
+.progress {
+  height: 7px;
+  max-width: 170px;
+  margin: 0 auto 22px;
+  background: #eadfce;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.progress i {
+  display: block;
+  height: 100%;
+  background: #f2ce58;
+  border-radius: 20px;
+  transition: width 0.25s;
+}
+.flow h1 {
+  font-size: clamp(36px, 7vw, 56px);
+  line-height: 1.02;
+  letter-spacing: -0.05em;
+  margin: 10px 0;
+}
+.sub {
+  font-size: 18px;
+  color: #756e60;
+  margin: 0 0 24px;
+  min-height: 27px;
+}
+
+/* --- option entry (task names, things to compare) --- */
+.inputs {
+  display: grid;
+  gap: 10px;
+}
+.inputRow {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+}
+.inputRow > b {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  border-radius: 12px;
+  background: #f6d765;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  transform: rotate(-4deg);
+}
+.inputRow:nth-child(even) > b {
+  background: #ebe5d4;
+  transform: rotate(4deg);
+}
+.inputRow input {
+  flex: 1;
+  height: 56px;
+  border: 1.5px solid #e6d9b8;
+  background: #fffdf7;
+  border-radius: 16px;
+  padding: 0 16px;
+  font-size: 18px;
+  box-shadow: 0 3px 0 #d8c79a;
+}
+.remove {
+  border: 0;
+  background: transparent;
+  font-size: 24px;
+  min-height: 44px;
+}
+
+/* --- buttons --- */
+.add,
+.minor,
+.back {
+  border: 0;
+  background: transparent;
+  color: #756e60;
+  font-weight: 850;
+  min-height: 44px;
+}
+.back {
+  display: block;
+  margin: 15px auto 0;
+}
+.primary {
+  width: 100%;
+  height: 54px;
+  border: 0;
+  border-radius: 16px;
+  background: #403a2f;
+  color: white;
+  font-weight: 900;
+  margin-top: 18px;
+}
+.primary:disabled {
+  opacity: 0.4;
+}
+
+/* --- selectable cards (criteria picker, time picker) --- */
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.card {
+  border: 1.5px solid #e6d9b8;
+  background: #fffdf7;
+  border-radius: 19px;
+  padding: 17px;
+  text-align: left;
+  box-shadow: 0 4px 0 #d8c79a;
+  transition: 0.15s;
+}
+.card:hover {
+  transform: translateY(-2px);
+}
+.card.selected {
+  border: 3px solid #9a740e;
+  background: #fff3bd;
+}
+.card b,
+.card small {
+  display: block;
+}
+.card b {
+  font-size: 17px;
+}
+.card small {
+  color: #756e60;
+  margin-top: 4px;
+}
+
+/* --- segmented pill rows, used wherever the old UI had a slider or select --- */
+.group {
+  background: #fffdf7;
+  border: 1.5px solid #e6d9b8;
+  border-radius: 22px;
+  box-shadow: 0 5px 0 #d8c79a;
+  padding: 20px;
+  text-align: left;
+  display: grid;
+  gap: 18px;
+}
+.groupTitle {
+  font-size: 19px;
+  font-weight: 900;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.row > span {
+  display: block;
+  font-weight: 850;
+  font-size: 14px;
+  color: #756e60;
+  margin-bottom: 8px;
+}
+.pills {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 7px;
+}
+.pill {
+  min-height: 52px;
+  border: 1.5px solid #e6d9b8;
+  background: #fffefb;
+  border-radius: 14px;
+  padding: 6px 4px;
+  font-weight: 850;
+  font-size: 14px;
+  line-height: 1.2;
+  transition: 0.14s;
+}
+.pill:hover {
+  transform: translateY(-2px);
+}
+.pill.on {
+  border: 2.5px solid #9a740e;
+  background: #fff3bd;
+}
+.pill small {
+  display: block;
+  font-size: 11px;
+  color: #756e60;
+  margin-top: 2px;
+  font-weight: 800;
+}
+.pill.on small {
+  color: #8a6818;
+}
+
+/* --- result --- */
+.result {
+  background: #fffdf7;
+  border: 1.5px solid #e6d9b8;
+  border-radius: 27px;
+  padding: 26px;
+  box-shadow: 0 5px 0 #d8c79a;
+}
+.result h1 {
+  font-size: clamp(40px, 7vw, 62px);
+  margin: 12px 0 6px;
+}
+.message {
+  font-size: 19px;
+  color: #756e60;
+  margin: 0;
+}
+.ranking {
+  display: grid;
+  gap: 10px;
+  text-align: left;
+  margin: 26px 0 15px;
+}
+.rank {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 16px 18px;
+  border-radius: 17px;
+  background: #f7f0df;
+  border: 1px solid #e6d9b8;
+}
+.rank.top {
+  background: #fff3bd;
+  border-color: #eed89d;
+}
+.rank > b {
+  font-size: 21px;
+  flex: 0 0 auto;
+}
+.rank div {
+  flex: 1;
+  min-width: 0;
+}
+.rank h2 {
+  font-size: 17px;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.rank small {
+  display: block;
+  color: #756e60;
+  margin-top: 4px;
+}
+.rank > span {
+  font-variant-numeric: tabular-nums;
+  font-weight: 900;
+  color: #9a740e;
+}
+.focus {
+  background: #dfe4cd;
+  border: 1.5px solid #aebd96;
+  border-radius: 17px;
+  padding: 16px;
+  font-weight: 900;
+  margin: 15px 0;
+  box-shadow: 0 4px 0 #aebb99;
+}
+.details {
+  margin: 13px auto;
+  max-width: 420px;
+  color: #756e60;
+  text-align: left;
+}
+.details summary {
+  font-size: 14px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  text-align: center;
+}
+.details div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 7px;
+  border-bottom: 1px dashed #e6d9b8;
+}
+.thinking {
+  font-size: 24px;
+  font-weight: 900;
+}
+
+/* --- shared guards, mirroring the other two flows --- */
+.flow * {
+  min-width: 0;
+}
+.card,
+.pill,
+.inputRow input,
+.result h1 {
+  overflow-wrap: anywhere;
+}
+.card:focus-visible,
+.pill:focus-visible,
+.primary:focus-visible {
+  outline: 3px solid #825de0;
+  outline-offset: 3px;
+}
+@media (max-width: 500px) {
+  .flow {
+    padding: 18px 14px 55px;
+  }
+  .flow h1 {
+    font-size: 38px;
+  }
+  .sub {
+    font-size: 16px;
+  }
+  .cards {
+    grid-template-columns: 1fr;
+  }
+  .group {
+    padding: 16px;
+    gap: 15px;
+  }
+  .result {
+    padding: 20px 15px;
+  }
+  .result h1 {
+    font-size: 40px;
+  }
+  .pills {
+    gap: 5px;
+  }
+  .pill {
+    font-size: 12px;
+    padding: 6px 2px;
+    min-height: 58px;
+  }
+  .pill small {
+    font-size: 10px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .pill {
+    transition: none !important;
+  }
+}

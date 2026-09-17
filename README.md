@@ -24,7 +24,22 @@ Every result exposes its reasoning or scoring inputs. The engine is deterministi
 
 ## Architecture
 
-Next.js App Router, React, TypeScript, and Tailwind CSS. `components/DecisionBuddy.tsx` contains the progressive flows and reusable form controls; `lib/decisions.ts` holds pure scoring functions. The app is client-side and requires no authentication or backend.
+Next.js App Router, React, and TypeScript. Tailwind is installed, but the UI is hand-written CSS: `app/globals.css` for the shell, CSS Modules for the flows.
+
+`components/DecisionBuddy.tsx` is the shell — header, home screen, random picker and history — and hands each guided mode to its own component:
+
+| Mode | Component | Styles |
+| --- | --- | --- |
+| 🛍️ Should I Buy It? | `BuyFlow.tsx` | `BuyFlow.module.css` |
+| 🍜 What Should I Eat? | `FoodFlow.tsx` | `FoodFlow.module.css` |
+| 🔥 What Should I Do First? | `TaskFlow.tsx` | `Flow.module.css` |
+| ⚖️ Help Me Choose | `CompareFlow.tsx` | `Flow.module.css` |
+
+All four share the `DuckBuddy` mascot exported from `BuyFlow.tsx` and ask one screenful of tap targets at a time — no sliders or dropdowns.
+
+`lib/decisions.ts` holds the pure scoring functions. `rankTasks` and `compare` back the task and comparison flows; `scoreBuy` and `scoreFood` are currently unused, because `BuyFlow` and `FoodFlow` score from the point values attached to their own answer choices.
+
+The app is client-side and requires no authentication or backend.
 
 History is stored under the browser `localStorage` key `buddy-history` as an array of `{ id, type, title, result, date, mode }` objects. It stays on the device and can be deleted item by item.
 
