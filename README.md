@@ -26,6 +26,8 @@ Every result exposes its reasoning or scoring inputs. All of it lives in `lib/de
 
 Next.js App Router, React, and TypeScript. Tailwind is installed, but the UI is hand-written CSS: `app/globals.css` for the shell, CSS Modules for the flows.
 
+The rounded typeface is Baloo 2, self-hosted through `next/font` in `app/layout.tsx` and exposed to CSS as `--font-rounded`. Changing it is the import and the call in that file; anything with a weight axis reaching 800 will drop straight in.
+
 `components/DecisionBuddy.tsx` is the shell — header, home screen, random picker and history — and hands each guided mode to its own component:
 
 | Mode | Component | Styles |
