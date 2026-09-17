@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import s from "./BuyFlow.module.css";
 import { duckReactions } from "@/lib/duckReactions";
+import { scoreBuy } from "@/lib/decisions";
 
 export type DuckState =
   | "neutral"
@@ -438,12 +439,9 @@ export default function BuyFlow({
   );
   const key = steps[index];
   const total = steps.length;
-  const score = Object.values(answers).reduce(
-    (sum, c) => sum + (c?.value || 0),
-    0,
+  const { score, verdict } = scoreBuy(
+    Object.values(answers).map((c) => c?.value || 0),
   );
-  const verdict =
-    score >= 40 ? "BUY IT" : score >= 5 ? "WAIT 7 DAYS" : "DON’T BUY IT";
   const rankedReasons = Object.entries(answers)
     .map(([k, c]) => ({ key: k, choice: c!, copy: reasonCopy[k]?.[c!.label] }))
     .filter((r) => r.copy)

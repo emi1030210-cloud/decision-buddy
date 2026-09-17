@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import { DuckBuddy, DuckState } from "./BuyFlow";
 import s from "./FoodFlow.module.css";
 import { duckReactions } from "@/lib/duckReactions";
+import { scoreFood } from "@/lib/decisions";
 type Priority = "budget" | "health" | "convenience" | "craving";
 const priorities: {
   key: Priority;
@@ -100,12 +101,10 @@ export default function FoodFlow({
             : 100;
   const decide = (next = scores, secretChoice = secret, without = "") => {
     const pool = clean.filter((x) => x !== without);
-    const final = { ...next };
-    if (secretChoice) final[secretChoice] = (final[secretChoice] || 0) + 3;
-    const max = Math.max(...pool.map((x) => final[x] || 0));
-    let tied = pool.filter((x) => (final[x] || 0) === max);
-    if (wins.craving && tied.includes(wins.craving)) tied = [wins.craving];
-    else if (secretChoice && tied.includes(secretChoice)) tied = [secretChoice];
+    const { scores: final, tied } = scoreFood(pool, next, {
+      secret: secretChoice,
+      craving: wins.craving,
+    });
     setScores(final);
     setWinner(tied[Math.floor(Math.random() * tied.length)] || pool[0]);
     setScreen("thinking");

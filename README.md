@@ -14,13 +14,13 @@ Decision Buddy provides lightweight decision frameworks that are faster and frie
 
 ## Decision logic
 
-- **Food:** normalizes the weighted sum of budget fit, health, convenience, and craving to 100.
-- **Purchase:** adds points for need, long-held desire, frequent use, and failed alternatives; working duplicates, impulse timing, and budget pain reduce the score. Scores produce Buy, Wait 7 Days, or Maybe Don't.
+- **Food:** you pick up to two priorities and name the winner of each. A priority awards its points to the option that won it — 2 for budget, health or convenience, 3 for craving — and the gut check adds 3 more. Highest total wins; a tie goes to the craving pick, then to the gut pick, then to a coin flip.
+- **Purchase:** every answer carries its own point value, positive or negative — owning a working duplicate or buying on impulse costs points, genuine need and long-held desire earn them. The total decides: 40 or more is Buy It, 5 or more is Wait A Little, below that is Maybe Don't.
 - **Tasks:** combines deadline urgency, importance, whether a task fits the available time, and energy cost.
 - **Comparison:** computes `Σ(rating × importance)` and normalizes against the maximum possible score.
 - **Random:** selects uniformly from the remaining non-empty options.
 
-Every result exposes its reasoning or scoring inputs. The engine is deterministic except for the intentionally random picker and uses no AI API.
+Every result exposes its reasoning or scoring inputs. All of it lives in `lib/decisions.ts` and is deterministic — the two places a coin is flipped, the random picker and the food tie-break, do the flipping in the component — and none of it calls an AI API.
 
 ## Architecture
 
@@ -37,7 +37,7 @@ Next.js App Router, React, and TypeScript. Tailwind is installed, but the UI is 
 
 All four share the `DuckBuddy` mascot exported from `BuyFlow.tsx` and ask one screenful of tap targets at a time — no sliders or dropdowns.
 
-`lib/decisions.ts` holds the pure scoring functions. `rankTasks` and `compare` back the task and comparison flows; `scoreBuy` and `scoreFood` are currently unused, because `BuyFlow` and `FoodFlow` score from the point values attached to their own answer choices.
+`lib/decisions.ts` holds the pure scoring functions — `rankTasks`, `compare`, `scoreBuy` and `scoreFood` — one per mode. The components own the questions, the copy and the duck's reactions; the arithmetic lives in the library.
 
 The app is client-side and requires no authentication or backend.
 

@@ -2,9 +2,8 @@
 import { useEffect, useState } from "react";
 import { DuckBuddy } from "./BuyFlow";
 import s from "./Flow.module.css";
-import { compare } from "@/lib/decisions";
+import { compare, Criterion } from "@/lib/decisions";
 
-type Criterion = { name: string; weight: number; ratings: number[] };
 const presets: { icon: string; name: string; sub: string }[] = [
   { icon: "💰", name: "Price", sub: "What it costs me" },
   { icon: "😊", name: "Enjoyment", sub: "How much I'd like it" },
