@@ -593,6 +593,12 @@ export default function BuyFlow({
                 setScreen("setup");
                 setIndex(0);
                 setAnswers({});
+                setItem("");
+                setPrice("");
+                setSelected(null);
+                setReaction("");
+                setDuck("curious");
+                setRejected(false);
               }}
             >
               Done ✓

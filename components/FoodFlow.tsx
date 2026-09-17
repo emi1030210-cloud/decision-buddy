@@ -387,6 +387,10 @@ export default function FoodFlow({
               setScores({});
               setWins({});
               setPicked([]);
+              setOptions(["", "", ""]);
+              setCi(0);
+              setSecret("");
+              setWinner("");
             }}
           >
             Sounds good ✓
