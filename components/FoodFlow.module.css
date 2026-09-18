@@ -20,13 +20,13 @@
   transition: width 0.25s;
 }
 .flow h1 {
-  font-size: clamp(36px, 7vw, 56px);
+  font-size:clamp(38px, 7vw, 59px);
   line-height: 1.02;
   letter-spacing: -0.05em;
   margin: 10px 0;
 }
 .sub {
-  font-size: 18px;
+  font-size:20px;
   color: #756e60;
   margin: 0 0 24px;
 }
@@ -47,7 +47,7 @@
   background: #fffdf7;
   border-radius: 16px;
   padding: 0 16px;
-  font-size: 18px;
+  font-size:20px;
   box-shadow: 0 3px 0 #d8c79a;
 }
 .remove,
@@ -59,7 +59,7 @@
   background: transparent;
 }
 .remove {
-  font-size: 24px;
+  font-size:26px;
 }
 .add,
 .minor,
@@ -110,7 +110,7 @@
   display: block;
 }
 .card b {
-  font-size: 17px;
+  font-size:19px;
 }
 .card small {
   color: #756e60;
@@ -118,11 +118,11 @@
 }
 .choice {
   min-height: 57px;
-  font-size: 17px;
+  font-size:19px;
   font-weight: 850;
 }
 .choice span {
-  font-size: 23px;
+  font-size:25px;
   margin-right: 10px;
 }
 .back {
@@ -130,7 +130,7 @@
   margin: 15px auto;
 }
 .thinking {
-  font-size: 24px;
+  font-size:26px;
   font-weight: 900;
 }
 .result {
@@ -141,11 +141,11 @@
   box-shadow: 0 5px 0 #d8c79a;
 }
 .result h1 {
-  font-size: clamp(44px, 8vw, 68px);
+  font-size:clamp(47px, 8vw, 72px);
   text-transform: uppercase;
 }
 .message {
-  font-size: 19px;
+  font-size:21px;
   color: #756e60;
 }
 .reasons {
@@ -166,7 +166,7 @@
   color: #756e60;
 }
 .details summary {
-  font-size: 14px;
+  font-size:16px;
   text-decoration: underline;
   cursor: pointer;
 }
@@ -184,7 +184,7 @@
   margin-top: 20px;
 }
 .rejectOptions h2 {
-  font-size: 20px;
+  font-size:22px;
 }
 .actions {
   display: grid;
@@ -197,7 +197,7 @@
     padding-top: 24px;
   }
   .flow h1 {
-    font-size: 38px;
+    font-size:40px;
   }
   .cards {
     grid-template-columns: 1fr;
@@ -206,10 +206,10 @@
     padding: 20px 15px;
   }
   .result h1 {
-    font-size: 43px;
+    font-size:46px;
   }
   .sub {
-    font-size: 16px;
+    font-size:18px;
   }
   .choice {
     padding: 13px 15px;
@@ -247,12 +247,12 @@
     margin: 5px auto 15px;
   }
   .flow h1 {
-    font-size: clamp(27px, 8vw, 31px);
+    font-size:clamp(29px, 8vw, 33px);
     line-height: 1.08;
     margin: 7px 0;
   }
   .sub {
-    font-size: 15px;
+    font-size:17px;
     margin-bottom: 15px;
   }
   .inputs,
@@ -269,14 +269,14 @@
     padding: 13px 15px;
   }
   .card b {
-    font-size: 16px;
+    font-size:18px;
   }
   .card small {
-    font-size: 13px;
+    font-size:15px;
   }
   .choice {
     padding: 12px 14px;
-    font-size: 16px;
+    font-size:18px;
   }
   .primary {
     height: 52px;
@@ -286,11 +286,11 @@
     padding: 17px 14px;
   }
   .result h1 {
-    font-size: 38px;
+    font-size:40px;
     margin: 7px 0;
   }
   .message {
-    font-size: 16px;
+    font-size:18px;
   }
   .reasons {
     margin: 17px auto 10px;

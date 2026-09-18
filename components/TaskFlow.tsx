@@ -72,7 +72,8 @@ function Pills<T extends number>({
   return (
     <div className={s.row} role="group" aria-label={label}>
       <span>{label}</span>
-      <div className={s.pills}>
+      {/* four labelled choices, not the 1-5 scales: these get two-up on phones */}
+      <div className={`${s.pills} ${options.length <= 4 ? s.wide : ""}`}>
         {options.map((o) => (
           <button
             key={o.value}

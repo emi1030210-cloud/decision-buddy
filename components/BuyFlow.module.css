@@ -11,7 +11,7 @@
   margin-bottom: 30px;
   color: #756e60;
   font-weight: 850;
-  font-size: 14px;
+  font-size:16px;
 }
 .track {
   height: 10px;
@@ -100,7 +100,7 @@
   position: absolute;
   right: -25px;
   bottom: -8px;
-  font-size: 25px;
+  font-size:27px;
 }
 .suspicious .eye:first-of-type {
   transform: rotate(18deg) scaleY(0.55);
@@ -129,14 +129,14 @@
   animation: celebrate 0.35s ease-in-out infinite alternate;
 }
 .question {
-  font-size: clamp(34px, 6vw, 54px);
+  font-size:clamp(36px, 6vw, 57px);
   line-height: 1.02;
   letter-spacing: -0.05em;
   margin: 0 auto 12px;
   max-width: 650px;
 }
 .helper {
-  font-size: 18px;
+  font-size:20px;
   color: #756e60;
   margin: 0 auto 30px;
   min-height: 27px;
@@ -176,7 +176,7 @@
   box-shadow: 0 3px 0 #c39b31;
 }
 .answerIcon {
-  font-size: 25px;
+  font-size:27px;
   width: 36px;
   text-align: center;
 }
@@ -185,15 +185,15 @@
   flex-direction: column;
 }
 .answerText b {
-  font-size: 18px;
+  font-size:20px;
 }
 .answerText small {
-  font-size: 14px;
+  font-size:16px;
   color: #756e60;
   margin-top: 4px;
 }
 .reaction {
-  font-size: 23px;
+  font-size:25px;
   font-weight: 900;
   color: #9a740e;
   min-height: 32px;
@@ -230,7 +230,7 @@
   border-radius: 15px;
   background: white;
   padding: 0 16px;
-  font-size: 18px;
+  font-size:20px;
 }
 .cta {
   width: 100%;
@@ -245,7 +245,7 @@
   opacity: 0.45;
 }
 .thinkingCopy {
-  font-size: 25px;
+  font-size:27px;
   font-weight: 900;
   margin-top: 20px;
 }
@@ -257,12 +257,12 @@
   box-shadow: 0 6px 0 #d8c79a;
 }
 .verdict h1 {
-  font-size: clamp(46px, 8vw, 72px);
+  font-size:clamp(49px, 8vw, 76px);
   letter-spacing: -0.06em;
   margin: 12px 0;
 }
 .verdict > p {
-  font-size: 19px;
+  font-size:21px;
   color: #756e60;
 }
 .reasons {
@@ -337,16 +337,16 @@
     height: 72px;
   }
   .question {
-    font-size: 36px;
+    font-size:38px;
   }
   .answer {
     padding: 16px;
   }
   .answerText b {
-    font-size: 17px;
+    font-size:19px;
   }
   .answerText small {
-    font-size: 13px;
+    font-size:15px;
   }
 }
 .curious {
@@ -437,12 +437,12 @@
     margin: 6px auto 16px;
   }
   .question {
-    font-size: clamp(26px, 8vw, 30px);
+    font-size:clamp(28px, 8vw, 32px);
     line-height: 1.08;
     margin-bottom: 8px;
   }
   .helper {
-    font-size: 15px;
+    font-size:17px;
     margin-bottom: 15px;
     min-height: 20px;
   }
@@ -454,10 +454,10 @@
     padding: 12px 14px;
   }
   .answerText b {
-    font-size: 16px;
+    font-size:18px;
   }
   .answerText small {
-    font-size: 13px;
+    font-size:15px;
     line-height: 1.25;
   }
   .back {
@@ -513,7 +513,7 @@
   animation: revealUp 0.32s 0.72s both;
 }
 .sparkles {
-  font-size: 25px;
+  font-size:27px;
   color: #c89512;
   letter-spacing: 12px;
   margin-top: -15px;
@@ -521,7 +521,7 @@
 }
 .reasonsTitle {
   text-align: left;
-  font-size: 20px;
+  font-size:22px;
   margin: 35px 0 13px;
 }
 .reason {
@@ -530,14 +530,14 @@
   gap: 14px;
 }
 .reason > span {
-  font-size: 25px;
+  font-size:27px;
 }
 .reason div {
   display: flex;
   flex-direction: column;
 }
 .reason b {
-  font-size: 16px;
+  font-size:18px;
 }
 .reason small {
   color: #756e60;
@@ -561,7 +561,7 @@
 .details h3 {
   display: flex;
   justify-content: space-between;
-  font-size: 18px;
+  font-size:20px;
 }
 .details h3 span {
   color: #9a740e;
@@ -578,11 +578,11 @@
   background: #fffdf7;
   border-radius: 10px;
   padding: 10px;
-  font-size: 12px;
+  font-size:14px;
   text-align: center;
 }
 .thresholds b {
-  font-size: 11px;
+  font-size:13px;
   margin-bottom: 4px;
 }
 .verdictActions {
@@ -637,7 +637,7 @@
     margin-bottom: 22px;
   }
   .verdict h1 {
-    font-size: 43px;
+    font-size:46px;
   }
   .reasonsTitle {
     margin-top: 25px;
@@ -664,11 +664,11 @@
   gap: 10px;
   align-items: center;
   font-weight: 850;
-  font-size: 16px;
+  font-size:18px;
 }
 .simpleReasons span {
   color: #9a740e;
-  font-size: 18px;
+  font-size:20px;
 }
 .details {
   margin: 14px auto 0;
@@ -681,7 +681,7 @@
 .details summary {
   text-decoration: underline;
   text-underline-offset: 3px;
-  font-size: 14px;
+  font-size:16px;
 }
 .details[open] {
   background: #f7f0df;
@@ -722,7 +722,7 @@
   margin: 20px auto 0;
 }
 .thinkingCopy {
-  font-size: 24px;
+  font-size:26px;
 }
 @media (max-width: 520px) {
   .flow {
@@ -737,18 +737,18 @@
     margin-bottom: 14px;
   }
   .verdict h1 {
-    font-size: 40px;
+    font-size:42px;
     margin: 6px 0;
   }
   .verdict > p {
-    font-size: 16px;
+    font-size:18px;
   }
   .simpleReasons {
     margin: 19px auto 12px;
     gap: 8px;
   }
   .simpleReasons li {
-    font-size: 15px;
+    font-size:17px;
   }
   .details {
     margin-top: 8px;
