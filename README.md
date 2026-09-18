@@ -59,3 +59,7 @@ Open `http://localhost:3000`. Use `npm run build` to create a production build.
 ## Deploy
 
 Import the repository into Vercel and accept the detected Next.js defaults. No environment variables, database, or paid services are required.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
