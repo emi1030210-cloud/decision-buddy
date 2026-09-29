@@ -9,7 +9,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 30px;
-  color: #756e60;
+  color: #6f6959;
   font-weight: 850;
   font-size:16px;
 }
@@ -137,7 +137,7 @@
 }
 .helper {
   font-size:20px;
-  color: #756e60;
+  color: #6f6959;
   margin: 0 auto 30px;
   min-height: 27px;
 }
@@ -189,7 +189,7 @@
 }
 .answerText small {
   font-size:16px;
-  color: #756e60;
+  color: #6f6959;
   margin-top: 4px;
 }
 .reaction {
@@ -203,7 +203,7 @@
 .back {
   border: 0;
   background: transparent;
-  color: #756e60;
+  color: #6f6959;
   font-weight: 850;
   padding: 14px;
   margin-top: 22px;
@@ -263,7 +263,7 @@
 }
 .verdict > p {
   font-size:21px;
-  color: #756e60;
+  color: #6f6959;
 }
 .reasons {
   display: grid;
@@ -540,13 +540,13 @@
   font-size:18px;
 }
 .reason small {
-  color: #756e60;
+  color: #6f6959;
   margin-top: 4px;
   line-height: 1.35;
 }
 .nerdy {
   font-weight: 850;
-  color: #756e60;
+  color: #6f6959;
   margin: 30px 0 10px;
 }
 .details {
@@ -676,7 +676,7 @@
   background: transparent;
   border: 0;
   padding: 0;
-  color: #756e60;
+  color: #6f6959;
 }
 .details summary {
   text-decoration: underline;
@@ -703,7 +703,7 @@
   border: 0;
   background: transparent;
   min-height: 44px;
-  color: #756e60;
+  color: #6f6959;
   font-weight: 850;
   text-decoration: underline;
   text-underline-offset: 3px;

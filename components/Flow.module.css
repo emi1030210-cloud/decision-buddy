@@ -30,7 +30,7 @@
 }
 .sub {
   font-size: 20px;
-  color: #756e60;
+  color: #6f6959;
   margin: 0 0 24px;
   min-height: 27px;
 }
@@ -70,10 +70,12 @@
   font-size: 20px;
   box-shadow: 0 3px 0 #d8c79a;
 }
-.remove {
+.inputRow .remove {
   border: 0;
   background: transparent;
   font-size: 26px;
+  /* outranks the `.flow * { min-width: 0 }` overflow guard further down */
+  min-width: 44px;
   min-height: 44px;
 }
 
@@ -83,7 +85,7 @@
 .back {
   border: 0;
   background: transparent;
-  color: #756e60;
+  color: #6f6959;
   font-weight: 850;
   min-height: 44px;
 }
@@ -135,7 +137,7 @@
   font-size: 19px;
 }
 .card small {
-  color: #756e60;
+  color: #6f6959;
   margin-top: 4px;
 }
 
@@ -160,7 +162,7 @@
   display: block;
   font-weight: 850;
   font-size: 16px;
-  color: #756e60;
+  color: #6f6959;
   margin-bottom: 8px;
 }
 .pills {
@@ -190,7 +192,7 @@
 .pill small {
   display: block;
   font-size: 13px;
-  color: #756e60;
+  color: #6f6959;
   margin-top: 2px;
   font-weight: 800;
 }
@@ -212,7 +214,7 @@
 }
 .message {
   font-size: 21px;
-  color: #756e60;
+  color: #6f6959;
   margin: 0;
 }
 .ranking {
@@ -249,7 +251,7 @@
 }
 .rank small {
   display: block;
-  color: #756e60;
+  color: #6f6959;
   margin-top: 4px;
 }
 .rank > span {
@@ -269,7 +271,7 @@
 .details {
   margin: 13px auto;
   max-width: 420px;
-  color: #756e60;
+  color: #6f6959;
   text-align: left;
 }
 .details summary {
