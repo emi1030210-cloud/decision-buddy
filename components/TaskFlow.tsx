@@ -5,16 +5,16 @@ import s from "./Flow.module.css";
 import { rankTasks, Task } from "@/lib/decisions";
 
 const deadlines: { label: string; sub: string; value: number }[] = [
-  { label: "Today", sub: "it's today", value: 1 },
-  { label: "Tomorrow", sub: "1 day", value: 2 },
-  { label: "This week", sub: "3 days", value: 3 },
-  { label: "Whenever", sub: "5+ days", value: 5 },
+  { label: "今天", sub: "就是今天", value: 1 },
+  { label: "明天", sub: "1 天", value: 2 },
+  { label: "這禮拜", sub: "3 天", value: 3 },
+  { label: "都可以", sub: "5 天以上", value: 5 },
 ];
 const durations: { label: string; sub: string; value: number }[] = [
-  { label: "Quick", sub: "30 min", value: 0.5 },
-  { label: "A bit", sub: "1 hour", value: 1 },
-  { label: "A while", sub: "2 hours", value: 2 },
-  { label: "All of it", sub: "3+ hours", value: 3 },
+  { label: "很快", sub: "30 分鐘", value: 0.5 },
+  { label: "一下下", sub: "1 小時", value: 1 },
+  { label: "有點久", sub: "2 小時", value: 2 },
+  { label: "整個下午", sub: "3 小時以上", value: 3 },
 ];
 const scale = [1, 2, 3, 4, 5];
 const timeChoices: {
@@ -23,10 +23,10 @@ const timeChoices: {
   sub: string;
   value: number;
 }[] = [
-  { icon: "⏱️", label: "30 minutes", sub: "A pocket of time", value: 0.5 },
-  { icon: "🕐", label: "An hour", sub: "Enough for one thing", value: 1 },
-  { icon: "🕑", label: "Two hours", sub: "A proper block", value: 2 },
-  { icon: "🌤️", label: "The afternoon", sub: "3+ hours", value: 3 },
+  { icon: "⏱️", label: "30 分鐘", sub: "一小段空檔", value: 0.5 },
+  { icon: "🕐", label: "一小時", sub: "夠做完一件事", value: 1 },
+  { icon: "🕑", label: "兩小時", sub: "一個完整時段", value: 2 },
+  { icon: "🌤️", label: "一整個下午", sub: "3 小時以上", value: 3 },
 ];
 const emptyTask = (): Task => ({
   name: "",
@@ -35,27 +35,23 @@ const emptyTask = (): Task => ({
   importance: 3,
   energy: 3,
 });
-const placeholders = [
-  "Finish the assignment",
-  "Reply to that email",
-  "Laundry",
-];
+const placeholders = ["把作業寫完", "回那封信", "洗衣服"];
 const example: Task[] = [
   {
-    name: "Finish assignment",
+    name: "把作業寫完",
     deadline: 2,
     duration: 2,
     importance: 5,
     energy: 5,
   },
   {
-    name: "Apply for internship",
+    name: "投實習履歷",
     deadline: 5,
     duration: 1,
     importance: 5,
     energy: 3,
   },
-  { name: "Workout", deadline: 1, duration: 1, importance: 3, energy: 3 },
+  { name: "運動", deadline: 1, duration: 1, importance: 3, energy: 3 },
 ];
 
 function Pills<T extends number>({
@@ -135,24 +131,22 @@ export default function TaskFlow({
           <i style={{ width: `${progress}%` }} />
         </div>
         <DuckBuddy state="curious" />
-        <h1>Dump the list.</h1>
-        <p className={s.sub}>
-          Two to six things. We'll turn the panic into an order.
-        </p>
+        <h1>全部列出來。</h1>
+        <p className={s.sub}>兩到六件。我們把這團慌亂排出順序。</p>
         <div className={s.inputs}>
           {tasks.map((t, i) => (
             <div className={s.inputRow} key={i}>
               <b>{i + 1}</b>
               <input
-                aria-label={`Task ${i + 1}`}
-                placeholder={placeholders[i] || "One more thing"}
+                aria-label={`事情 ${i + 1}`}
+                placeholder={placeholders[i] || "還有一件"}
                 value={t.name}
                 onChange={(e) => update(i, { name: e.target.value })}
               />
               {tasks.length > 2 && (
                 <button
                   className={s.remove}
-                  aria-label={`Remove task ${i + 1}`}
+                  aria-label={`移除事情 ${i + 1}`}
                   onClick={() => setTasks(tasks.filter((_, j) => j !== i))}
                 >
                   ×
@@ -166,7 +160,7 @@ export default function TaskFlow({
             className={s.add}
             onClick={() => setTasks([...tasks, emptyTask()])}
           >
-            + Add another
+            ＋ 再加一件
           </button>
         )}
         <button
@@ -178,10 +172,10 @@ export default function TaskFlow({
             setScreen("detail");
           }}
         >
-          Sort this out →
+          幫我排順序 →
         </button>
         <button className={s.minor} onClick={() => setTasks(example)}>
-          Try an example
+          放範例看看
         </button>
       </section>
     );
@@ -195,39 +189,39 @@ export default function TaskFlow({
           <i style={{ width: `${progress}%` }} />
         </div>
         <DuckBuddy state="thinking" />
-        <h1>Tell me about it.</h1>
+        <h1>說說這件事。</h1>
         <p className={s.sub}>
-          {ti + 1} of {tasks.length} · be honest, the duck can tell
+          {ti + 1} / {tasks.length} · 誠實一點，鴨子看得出來
         </p>
         <div className={s.group}>
           <p className={s.groupTitle}>{t.name}</p>
           <Pills
-            label="When is it due?"
+            label="什麼時候要交？"
             options={deadlines}
             value={t.deadline}
             onChange={(v) => update(ti, { deadline: v })}
           />
           <Pills
-            label="How long will it take?"
+            label="要花多久？"
             options={durations}
             value={t.duration}
             onChange={(v) => update(ti, { duration: v })}
           />
           <Pills
-            label="How much does it matter?"
+            label="這件事有多重要？"
             options={scale.map((n) => ({
               label: String(n),
-              sub: n === 1 ? "meh" : n === 5 ? "a lot" : undefined,
+              sub: n === 1 ? "還好" : n === 5 ? "很重要" : undefined,
               value: n,
             }))}
             value={t.importance}
             onChange={(v) => update(ti, { importance: v })}
           />
           <Pills
-            label="How much energy does it need?"
+            label="需要多少力氣？"
             options={scale.map((n) => ({
               label: String(n),
-              sub: n === 1 ? "easy" : n === 5 ? "draining" : undefined,
+              sub: n === 1 ? "輕鬆" : n === 5 ? "很累" : undefined,
               value: n,
             }))}
             value={t.energy}
@@ -238,13 +232,13 @@ export default function TaskFlow({
           className={s.primary}
           onClick={() => (last ? setScreen("time") : setTi(ti + 1))}
         >
-          {last ? "Almost there →" : "Next task →"}
+          {last ? "快好了 →" : "下一件 →"}
         </button>
         <button
           className={s.back}
           onClick={() => (ti ? setTi(ti - 1) : setScreen("setup"))}
         >
-          ← Back
+          ← 上一步
         </button>
       </section>
     );
@@ -257,8 +251,8 @@ export default function TaskFlow({
           <i style={{ width: `${progress}%` }} />
         </div>
         <DuckBuddy state="curious" />
-        <h1>How much time do you have right now?</h1>
-        <p className={s.sub}>One tap. Don't overthink it.</p>
+        <h1>你現在有多少時間？</h1>
+        <p className={s.sub}>點一下就好，別想太多。</p>
         <div className={s.cards}>
           {timeChoices.map((c) => (
             <button
@@ -277,7 +271,7 @@ export default function TaskFlow({
           ))}
         </div>
         <button className={s.back} onClick={() => setScreen("detail")}>
-          ← Back
+          ← 上一步
         </button>
       </section>
     );
@@ -286,7 +280,7 @@ export default function TaskFlow({
     return (
       <section className={s.flow}>
         <DuckBuddy state="thinking" />
-        <p className={s.thinking}>Lining them up…</p>
+        <p className={s.thinking}>排一下順序…</p>
       </section>
     );
 
@@ -295,8 +289,8 @@ export default function TaskFlow({
     <section className={s.flow}>
       <div className={s.result}>
         <DuckBuddy state="celebrating" />
-        <h1>Here's the move.</h1>
-        <p className={s.message}>Your deadline has entered the chat.</p>
+        <h1>就這樣做。</h1>
+        <p className={s.message}>你的截止日已加入戰局。</p>
         <div className={s.ranking}>
           {ranked.map((t, i) => (
             <div className={`${s.rank} ${i === 0 ? s.top : ""}`} key={i}>
@@ -304,11 +298,11 @@ export default function TaskFlow({
               <div>
                 <h2>{t.name}</h2>
                 <small>
-                  {i === 0 ? "Do this now." : i === 1 ? "Then this." : "Later."}
+                  {i === 0 ? "現在就做" : i === 1 ? "接著這件" : "之後再說"}
                   {" · "}
-                  {t.deadline === 1 ? "Due today" : `Due in ${t.deadline} days`}
+                  {t.deadline === 1 ? "今天要交" : `還有 ${t.deadline} 天`}
                   {" · "}
-                  {t.duration}h
+                  {t.duration} 小時
                 </small>
               </div>
             </div>
@@ -316,11 +310,11 @@ export default function TaskFlow({
         </div>
         <div className={s.focus}>
           {fits
-            ? "Start with a 25-minute focus session →"
-            : "Nothing fits the time you have — start the top one anyway →"}
+            ? "先來個 25 分鐘的專注時段 →"
+            : "沒有一件塞得進你的時間 —— 還是先開第一件 →"}
         </div>
         <details className={s.details}>
-          <summary>Why this order?</summary>
+          <summary>為什麼是這個順序？</summary>
           {ranked.map((t, i) => (
             <div key={i}>
               <span>{t.name}</span>
@@ -333,14 +327,14 @@ export default function TaskFlow({
           onClick={() => {
             save(
               "🔥",
-              "Today's priorities",
+              "今天的優先順序",
               ranked.map((t) => t.name).join(" → "),
               "tasks",
             );
             reset();
           }}
         >
-          That's the plan ✓
+          就照這樣 ✓
         </button>
       </div>
     </section>

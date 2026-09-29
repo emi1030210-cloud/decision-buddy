@@ -26,7 +26,11 @@ Every result exposes its reasoning or scoring inputs. All of it lives in `lib/de
 
 Next.js App Router, React, and TypeScript. Tailwind is installed, but the UI is hand-written CSS: `app/globals.css` for the shell, CSS Modules for the flows.
 
-The rounded typeface is Baloo 2, self-hosted through `next/font` in `app/layout.tsx` and exposed to CSS as `--font-rounded`. Changing it is the import and the call in that file; anything with a weight axis reaching 800 will drop straight in.
+The interface is in Traditional Chinese (zh-Hant-TW).
+
+Two rounded typefaces, both self-hosted through `next/font` in `app/layout.tsx` and exposed to CSS as `--font-rounded` and `--font-rounded-tc`: Baloo 2 for Latin, and jf open 粉圓 for Chinese. Baloo 2 carries no CJK, so without the second face Chinese would fall back to the system font and lose the rounded look the whole design rests on. No rounded Traditional Chinese face on Google Fonts is usable here — the Japanese rounded families set punctuation and several glyphs to Japanese conventions, and LXGW WenKai TC renders 為 as the 爲 variant.
+
+`app/fonts/jf-openhuninn-subset.woff2` is subset to the characters this UI can show plus common Chinese, 525 glyphs at 103 KB instead of 11,988 at 4.7 MB. If you add copy with characters outside that set, regenerate it — see `app/fonts/README.md`.
 
 `components/DecisionBuddy.tsx` is the shell — header, home screen, random picker and history — and hands each guided mode to its own component:
 
@@ -63,3 +67,5 @@ Import the repository into Vercel and accept the detected Next.js defaults. No e
 ## License
 
 MIT — see [LICENSE](LICENSE).
+
+The bundled typeface jf open 粉圓 is licensed separately under the SIL Open Font License 1.1; see `app/fonts/OFL.txt`.

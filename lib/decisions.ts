@@ -41,7 +41,7 @@ export function compare(options: string[], criteria: Criterion[]) {
 // --- 🛍️ Should I Buy It? ---
 // Every answer carries its own point value, positive or negative; the verdict
 // is the running total. See the `questions` table in BuyFlow.tsx.
-export type BuyVerdict = "BUY IT" | "WAIT 7 DAYS" | "DON’T BUY IT";
+export type BuyVerdict = "買吧" | "再等七天" | "還是別買";
 export function scoreBuy(values: number[]): {
   score: number;
   verdict: BuyVerdict;
@@ -50,7 +50,7 @@ export function scoreBuy(values: number[]): {
   return {
     score,
     verdict:
-      score >= 40 ? "BUY IT" : score >= 5 ? "WAIT 7 DAYS" : "DON’T BUY IT",
+      score >= 40 ? "買吧" : score >= 5 ? "再等七天" : "還是別買",
   };
 }
 

@@ -29,230 +29,228 @@ const questions: Record<
   { title: (price: string) => string; choices: Choice[] }
 > = {
   owns: {
-    title: () =>
-      "Do you already own something that does basically the same thing?",
+    title: () => "你是不是已經有功能差不多的東西了？",
     choices: [
       {
-        label: "Nope",
-        sub: "I actually don’t have one",
+        label: "沒有",
+        sub: "我真的沒有",
         value: 20,
-        reaction: "Oh! Okay...",
+        reaction: "喔！好吧…",
         duck: "happy",
       },
       {
-        label: "Kind of",
-        sub: "Similar, but not quite",
+        label: "算有吧",
+        sub: "類似，但不太一樣",
         value: 8,
-        reaction: "Hmm. Define “kind of.” 👀",
+        reaction: "嗯。「算有」是多有？👀",
         duck: "thinking",
       },
       {
-        label: "Yep",
-        sub: "I definitely already own this",
+        label: "有",
+        sub: "我確實已經有了",
         value: -15,
-        reaction: "...interesting.",
+        reaction: "…有意思。",
         duck: "suspicious",
       },
     ],
   },
   condition: {
-    title: () => "And the one you already have... how’s it doing?",
+    title: () => "那你手上那個…狀況如何？",
     choices: [
       {
         icon: "✨",
-        label: "Totally fine",
-        sub: "Nothing wrong with it",
+        label: "好得很",
+        sub: "完全沒問題",
         value: -20,
-        reaction: "Oh really.",
+        reaction: "喔，是喔。",
         duck: "suspicious",
       },
       {
         icon: "😐",
-        label: "It’s okay",
-        sub: "Works, but I don’t love it",
+        label: "還可以",
+        sub: "能用，但不太喜歡",
         value: -8,
-        reaction: "Fair...",
+        reaction: "也是啦…",
         duck: "thinking",
       },
       {
         icon: "🩹",
-        label: "Barely surviving",
-        sub: "We’re approaching the end",
+        label: "快撐不住了",
+        sub: "差不多到極限了",
         value: 12,
-        reaction: "Okay, that’s relevant.",
+        reaction: "好，這點很關鍵。",
         duck: "concerned",
       },
       {
         icon: "🪦",
-        label: "Basically dead",
-        sub: "It has served its country",
+        label: "已經壞了",
+        sub: "它盡忠職守過了",
         value: 20,
-        reaction: "OH.",
+        reaction: "喔喔。",
         duck: "shocked",
       },
     ],
   },
   wanted: {
-    title: () => "How long have you wanted this?",
+    title: () => "你想要這個多久了？",
     choices: [
       {
         icon: "👀",
-        label: "I literally just saw it",
-        sub: "Like... today",
+        label: "剛剛才看到",
+        sub: "就…今天",
         value: -15,
-        reaction: "That was fast.",
+        reaction: "這也太快。",
         duck: "suspicious",
       },
       {
         icon: "🌱",
-        label: "A few days",
-        sub: "It’s been on my mind",
+        label: "幾天",
+        sub: "一直放在心上",
         value: -5,
-        reaction: "Hmm... noted.",
+        reaction: "嗯…記下了。",
         duck: "thinking",
       },
       {
         icon: "🗓️",
-        label: "A few weeks",
-        sub: "I’ve thought about it properly",
+        label: "幾個禮拜",
+        sub: "我認真想過了",
         value: 8,
-        reaction: "Okay, so this has history.",
+        reaction: "好，這是有淵源的。",
         duck: "thinking",
       },
       {
         icon: "🫡",
-        label: "A month+",
-        sub: "This is not a random impulse",
+        label: "一個月以上",
+        sub: "這不是臨時起意",
         value: 15,
-        reaction: "Oh, you’ve been thinking about this.",
+        reaction: "喔，你想很久了。",
         duck: "happy",
       },
     ],
   },
   usage: {
-    title: () => "Be realistic. How often would you actually use it?",
+    title: () => "務實一點。你實際上會多常用？",
     choices: [
       {
         icon: "🫥",
-        label: "Almost never",
-        sub: "Mostly for the fantasy version of me",
+        label: "幾乎不會",
+        sub: "那是我幻想中的自己",
         value: -20,
-        reaction: "... Thank you for your honesty.",
+        reaction: "…謝謝你這麼誠實。",
         duck: "judging",
       },
       {
         icon: "🌙",
-        label: "Sometimes",
-        sub: "Maybe a few times a month",
+        label: "偶爾",
+        sub: "一個月幾次吧",
         value: -5,
-        reaction: "Okay. Occasionally counts.",
+        reaction: "好，偶爾也算。",
         duck: "thinking",
       },
       {
         icon: "📅",
-        label: "Every week",
-        sub: "It would definitely get used",
+        label: "每週都會",
+        sub: "絕對用得到",
         value: 12,
-        reaction: "Now we’re talking.",
+        reaction: "這就對了。",
         duck: "happy",
       },
       {
         icon: "⭐",
-        label: "All the time",
-        sub: "This would become part of my life",
+        label: "一直都會",
+        sub: "會變成我生活的一部分",
         value: 20,
-        reaction: "Okay, that’s a strong argument.",
+        reaction: "好，這理由很有力。",
         duck: "happy",
       },
     ],
   },
   budget: {
-    title: (p) =>
-      `And how much is NT$${Number(p || 0).toLocaleString()} going to hurt?`,
+    title: (p) => `NT$${Number(p || 0).toLocaleString()} 對你來說有多痛？`,
     choices: [
       {
         icon: "😌",
-        label: "Totally fine",
-        sub: "Won’t affect my budget",
+        label: "完全不痛",
+        sub: "不影響我的預算",
         value: 15,
-        reaction: "Wallet survives. Good.",
+        reaction: "錢包平安。很好。",
         duck: "happy",
       },
       {
         icon: "🙂",
-        label: "A little",
-        sub: "I’ll notice it, but it’s okay",
+        label: "有一點",
+        sub: "會有感覺，但還好",
         value: 7,
-        reaction: "Manageable.",
+        reaction: "可以接受。",
         duck: "neutral",
       },
       {
         icon: "😬",
-        label: "Kinda hurts",
-        sub: "I’d have to cut back somewhere",
+        label: "有點痛",
+        sub: "別的地方要省一點",
         value: -10,
-        reaction: "Okay... that’s not nothing.",
+        reaction: "好…這不是小事。",
         duck: "concerned",
       },
       {
         icon: "💀",
-        label: "Financially irresponsible",
-        sub: "My bank account is begging me not to",
+        label: "根本不該買",
+        sub: "我的戶頭在求我住手",
         value: -25,
-        reaction: "BESTIE.",
+        reaction: "欸，冷靜。",
         duck: "shocked",
       },
     ],
   },
   reason: {
-    title: () => "Last question. Why do you actually want it?",
+    title: () => "最後一題。你到底為什麼想要？",
     choices: [
       {
         icon: "🧰",
-        label: "I genuinely need it",
-        sub: "It solves a real problem",
+        label: "我真的需要",
+        sub: "它解決真正的問題",
         value: 20,
-        reaction: "Valid.",
+        reaction: "合理。",
         duck: "happy",
       },
       {
         icon: "✨",
-        label: "It would improve my life",
-        sub: "Not essential, but genuinely useful",
+        label: "生活會變好",
+        sub: "不是必需，但真的實用",
         value: 12,
-        reaction: "I can work with that.",
+        reaction: "這我可以接受。",
         duck: "happy",
       },
       {
         icon: "❤️",
-        label: "I’ve wanted it forever",
-        sub: "I know I’d enjoy having it",
+        label: "想很久了",
+        sub: "我知道我會很開心",
         value: 8,
-        reaction: "Honestly? Fair.",
+        reaction: "老實說？有道理。",
         duck: "happy",
       },
       {
         icon: "🏷️",
-        label: "It’s on sale",
-        sub: "The discount got me",
+        label: "在特價",
+        sub: "被折扣打動了",
         value: -10,
-        reaction: "Would you want it at full price though? 👀",
+        reaction: "那原價你還會想要嗎？👀",
         duck: "suspicious",
       },
       {
         icon: "🎀",
-        label: "It’s cute",
-        sub: "That’s... basically the reason",
+        label: "很可愛",
+        sub: "理由…大概就是這個",
         value: -5,
-        reaction: "...it IS kinda cute.",
+        reaction: "…是真的有點可愛啦。",
         duck: "thinking",
       },
       {
         icon: "🤷",
-        label: "I don’t know",
-        sub: "Capitalism won",
+        label: "不知道",
+        sub: "資本主義贏了",
         value: -15,
-        reaction: "At least we’re self-aware.",
+        reaction: "至少我們有自知之明。",
         duck: "judging",
       },
     ],
@@ -260,10 +258,7 @@ const questions: Record<
 };
 export function DuckBuddy({ state = "neutral" }: { state?: DuckState }) {
   return (
-    <div
-      className={`${s.duck} ${s[state]}`}
-      aria-label={`Duck Buddy is ${state}`}
-    >
+    <div className={`${s.duck} ${s[state]}`} aria-label={`鴨子夥伴：${state}`}>
       <i className={s.wing} />
       <i className={s.wing} />
       <b className={s.eye} />
@@ -275,141 +270,41 @@ export function DuckBuddy({ state = "neutral" }: { state?: DuckState }) {
 }
 const reasonCopy: Record<string, Record<string, [string, string, string]>> = {
   owns: {
-    Nope: [
-      "🧺",
-      "No duplicate hiding at home",
-      "You don’t already own an equivalent.",
-    ],
-    "Kind of": [
-      "↔️",
-      "There is some overlap",
-      "You own something similar, but it isn’t quite the same.",
-    ],
-    Yep: [
-      "👀",
-      "You already own this",
-      "There’s already an equivalent doing this job.",
-    ],
+    沒有: ["🧺", "家裡沒有重複的", "你並沒有功能相同的東西。"],
+    算有吧: ["↔️", "有一點重疊", "你有類似的，但不完全一樣。"],
+    有: ["👀", "你已經有了", "已經有東西在做同樣的事。"],
   },
   condition: {
-    "Totally fine": [
-      "✨",
-      "Your current one is completely fine",
-      "Nothing is actually wrong with what you own.",
-    ],
-    "It’s okay": [
-      "😐",
-      "Your current one still works",
-      "It isn’t perfect, but it remains usable.",
-    ],
-    "Barely surviving": [
-      "🩹",
-      "Your current one is dying",
-      "This is starting to look like a replacement.",
-    ],
-    "Basically dead": [
-      "🪦",
-      "The old one has done its time",
-      "Replacing it makes a lot of sense.",
-    ],
+    好得很: ["✨", "現在那個完全沒問題", "你手上的東西其實沒壞。"],
+    還可以: ["😐", "現在那個還能用", "不完美，但還堪用。"],
+    快撐不住了: ["🩹", "現在那個快壞了", "看起來確實該換了。"],
+    已經壞了: ["🪦", "舊的已經功成身退", "換掉非常合理。"],
   },
   wanted: {
-    "I literally just saw it": [
-      "👀",
-      "You just discovered it",
-      "This has strong impulse-purchase energy.",
-    ],
-    "A few days": [
-      "🌱",
-      "This is still pretty new",
-      "A few days may not be enough time to know.",
-    ],
-    "A few weeks": [
-      "🗓️",
-      "You’ve thought about it",
-      "This doesn’t look like a random impulse.",
-    ],
-    "A month+": [
-      "🗓️",
-      "You’ve wanted it for a while",
-      "This clearly isn’t a passing thought.",
-    ],
+    剛剛才看到: ["👀", "你才剛發現它", "衝動購物的氣息很濃。"],
+    幾天: ["🌱", "還很新鮮", "幾天可能不夠你想清楚。"],
+    幾個禮拜: ["🗓️", "你想過了", "這不像是臨時起意。"],
+    一個月以上: ["🗓️", "你想很久了", "顯然不是一閃而過的念頭。"],
   },
   usage: {
-    "Almost never": [
-      "🫥",
-      "You probably won’t use it much",
-      "You selected “almost never.”",
-    ],
-    Sometimes: [
-      "🌙",
-      "Use would be occasional",
-      "It may spend a fair bit of time sitting around.",
-    ],
-    "Every week": [
-      "📅",
-      "You’ll actually use it",
-      "Weekly use gives this purchase a real purpose.",
-    ],
-    "All the time": [
-      "⭐",
-      "This would earn its keep",
-      "You said it would become part of your life.",
-    ],
+    幾乎不會: ["🫥", "你大概不會常用", "你自己選了「幾乎不會」。"],
+    偶爾: ["🌙", "只會偶爾用到", "它可能會閒置不少時間。"],
+    每週都會: ["📅", "你真的會用它", "每週都用，這筆錢有意義。"],
+    一直都會: ["⭐", "它值回票價", "你說它會變成生活的一部分。"],
   },
   budget: {
-    "Totally fine": [
-      "😌",
-      "Your budget can handle it",
-      "The price won’t meaningfully affect your spending.",
-    ],
-    "A little": [
-      "🙂",
-      "The price is manageable",
-      "You’ll notice it, but your budget should recover.",
-    ],
-    "Kinda hurts": [
-      "😬",
-      "The price actually hurts",
-      "You would need to cut back somewhere else.",
-    ],
-    "Financially irresponsible": [
-      "💀",
-      "Your wallet is begging you not to",
-      "This would seriously strain your budget.",
-    ],
+    完全不痛: ["😌", "你的預算撐得住", "這個價格不會真的影響你。"],
+    有一點: ["🙂", "價格還在可控範圍", "會有感覺，但緩得過來。"],
+    有點痛: ["😬", "這個價格確實會痛", "你得在別的地方省下來。"],
+    根本不該買: ["💀", "你的錢包在求你住手", "這會嚴重壓縮你的預算。"],
   },
   reason: {
-    "I genuinely need it": [
-      "🧰",
-      "It solves a real problem",
-      "This is a need, not just a shiny distraction.",
-    ],
-    "It would improve my life": [
-      "✨",
-      "It has genuine value",
-      "You expect a meaningful everyday improvement.",
-    ],
-    "I’ve wanted it forever": [
-      "❤️",
-      "The desire has stuck",
-      "You know you would enjoy owning it.",
-    ],
-    "It’s on sale": [
-      "🏷️",
-      "The discount is doing some work",
-      "A sale alone isn’t a reason to buy.",
-    ],
-    "It’s cute": [
-      "🎀",
-      "Cute is carrying the argument",
-      "Charming, yes. Necessary, less clear.",
-    ],
-    "I don’t know": [
-      "🤷",
-      "There isn’t a clear reason",
-      "Capitalism may have won this round.",
-    ],
+    我真的需要: ["🧰", "它解決真正的問題", "這是需求，不只是被閃到。"],
+    生活會變好: ["✨", "它有實際價值", "你預期日常會確實變好。"],
+    想很久了: ["❤️", "這份想要一直沒消失", "你知道自己會很享受擁有它。"],
+    在特價: ["🏷️", "折扣佔了很大因素", "光是特價不構成購買理由。"],
+    很可愛: ["🎀", "可愛撐起了整個理由", "確實迷人。必要性就還好。"],
+    不知道: ["🤷", "說不出明確理由", "這局可能是資本主義贏了。"],
   },
 };
 export default function BuyFlow({
@@ -431,7 +326,7 @@ export default function BuyFlow({
   const [rejected, setRejected] = useState(false);
   const steps = useMemo<Key[]>(
     () =>
-      answers.owns?.label === "Nope"
+      answers.owns?.label === "沒有"
         ? ["owns", "wanted", "usage", "budget", "reason"]
         : ["owns", "condition", "wanted", "usage", "budget", "reason"],
     [answers.owns],
@@ -447,7 +342,7 @@ export default function BuyFlow({
     .sort((a, b) => Math.abs(b.choice.value) - Math.abs(a.choice.value));
   useEffect(() => {
     if (screen !== "thinking") return;
-    setThinkLine("Hmm...");
+    setThinkLine("嗯…");
     const t1 = setTimeout(() => setScreen("verdict"), 900);
     return () => {
       clearTimeout(t1);
@@ -466,7 +361,7 @@ export default function BuyFlow({
         setReaction("");
         setDuck("thinking");
       },
-      c.label === "Financially irresponsible" ? 700 : 480,
+      c.label === "根本不該買" ? 700 : 480,
     );
   };
   const back = () => {
@@ -481,19 +376,19 @@ export default function BuyFlow({
     return (
       <section className={s.flow}>
         <DuckBuddy state="curious" />
-        <h1 className={s.question}>Okay, what are we thinking about buying?</h1>
-        <p className={s.helper}>No judgment. Yet.</p>
+        <h1 className={s.question}>好，我們在考慮買什麼？</h1>
+        <p className={s.helper}>先不批評你。目前啦。</p>
         <div className={s.setup}>
           <label className={s.field}>
-            Item name
+            品名
             <input
-              placeholder="Running shoes"
+              placeholder="跑鞋"
               value={item}
               onChange={(e) => setItem(e.target.value)}
             />
           </label>
           <label className={s.field}>
-            Price (NT$)
+            價格（NT$）
             <input
               type="number"
               inputMode="decimal"
@@ -507,7 +402,7 @@ export default function BuyFlow({
             disabled={!item || !price}
             onClick={() => setScreen("questions")}
           >
-            Let’s talk about it →
+            來聊聊這個 →
           </button>
         </div>
       </section>
@@ -521,22 +416,18 @@ export default function BuyFlow({
     );
   if (screen === "verdict") {
     const copy =
-      verdict === "BUY IT"
-        ? ["BUY IT.", "Yeah, this one makes sense.", "happy"]
-        : verdict === "WAIT 7 DAYS"
-          ? ["WAIT A LITTLE.", "You want it. Just maybe not today.", "thinking"]
-          : [
-              "MAYBE DON’T.",
-              "I don’t think this one is worth it.",
-              "suspicious",
-            ];
+      verdict === "買吧"
+        ? ["買吧。", "嗯，這個說得通。", "happy"]
+        : verdict === "再等七天"
+          ? ["先等一下。", "你想要，但也許不是今天。", "thinking"]
+          : ["還是別買。", "我覺得這個不太值得。", "suspicious"];
     if (rejected)
       return (
         <section className={s.flow}>
           <div className={`${s.verdict} ${s.rejection}`}>
             <DuckBuddy state="i-knew-it" />
-            <h1>Oh? 👀</h1>
-            <p>Maybe you already knew what you wanted.</p>
+            <h1>喔？👀</h1>
+            <p>看來你心裡早就有答案了。</p>
             <div className={s.verdictActions}>
               <button
                 className={s.save}
@@ -546,7 +437,7 @@ export default function BuyFlow({
                   setIndex(0);
                 }}
               >
-                Change my answers
+                我要改答案
               </button>
             </div>
           </div>
@@ -569,8 +460,8 @@ export default function BuyFlow({
             ))}
           </ul>
           <details className={s.details}>
-            <summary>Why this result?</summary>
-            <h3>Why?</h3>
+            <summary>為什麼是這個結果？</summary>
+            <h3>原因</h3>
             <ul>
               {rankedReasons.slice(0, 4).map(({ key, choice, copy: r }) => (
                 <li key={key}>
@@ -579,7 +470,7 @@ export default function BuyFlow({
               ))}
             </ul>
             <p>
-              <b>Buddy score: {score}</b>
+              <b>鴨子評分：{score}</b>
             </p>
           </details>
           <div className={s.verdictActions}>
@@ -598,10 +489,10 @@ export default function BuyFlow({
                 setRejected(false);
               }}
             >
-              Done ✓
+              完成 ✓
             </button>
             <button className={s.textAction} onClick={() => setRejected(true)}>
-              Hmm... I disagree
+              嗯…我不同意
             </button>
           </div>
         </div>
@@ -621,9 +512,7 @@ export default function BuyFlow({
       </div>
       <DuckBuddy state={duck} />
       <h1 className={s.question}>{q.title(price)}</h1>
-      <p className={s.helper}>
-        {reaction || "Pick the honest answer. The duck can tell."}
-      </p>
+      <p className={s.helper}>{reaction || "誠實作答，鴨子看得出來。"}</p>
       <div className={`${s.answers} ${key === "reason" ? s.grid : ""}`}>
         {q.choices.map((c, i) => (
           <button

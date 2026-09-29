@@ -5,15 +5,15 @@ import s from "./Flow.module.css";
 import { compare, Criterion } from "@/lib/decisions";
 
 const presets: { icon: string; name: string; sub: string }[] = [
-  { icon: "💰", name: "Price", sub: "What it costs me" },
-  { icon: "😊", name: "Enjoyment", sub: "How much I'd like it" },
-  { icon: "⭐", name: "Quality", sub: "How good it actually is" },
-  { icon: "⏱️", name: "Time", sub: "How long it takes" },
-  { icon: "💪", name: "Effort", sub: "How much work it is" },
-  { icon: "📈", name: "Long-term", sub: "How it looks in a year" },
+  { icon: "💰", name: "價格", sub: "要花我多少錢" },
+  { icon: "😊", name: "開心度", sub: "我會有多喜歡" },
+  { icon: "⭐", name: "品質", sub: "實際上好不好" },
+  { icon: "⏱️", name: "時間", sub: "要花多久" },
+  { icon: "💪", name: "費力程度", sub: "要出多少力" },
+  { icon: "📈", name: "長遠來看", sub: "一年後回頭怎麼想" },
 ];
 const scale = [1, 2, 3, 4, 5];
-const placeholders = ["Seoul", "Tokyo", "Hanoi"];
+const placeholders = ["首爾", "東京", "河內"];
 
 function Pills({
   label,
@@ -101,15 +101,15 @@ export default function CompareFlow({
           <i style={{ width: `${progress}%` }} />
         </div>
         <DuckBuddy state="curious" />
-        <h1>What are the options?</h1>
-        <p className={s.sub}>Two to five. Apples and oranges allowed.</p>
+        <h1>有哪些選項？</h1>
+        <p className={s.sub}>兩到五個。完全不同類的也可以。</p>
         <div className={s.inputs}>
           {options.map((o, i) => (
             <div className={s.inputRow} key={i}>
               <b>{i + 1}</b>
               <input
-                aria-label={`Option ${i + 1}`}
-                placeholder={placeholders[i] || "Another option"}
+                aria-label={`選項 ${i + 1}`}
+                placeholder={placeholders[i] || "再一個選項"}
                 value={o}
                 onChange={(e) =>
                   setOptions(
@@ -120,7 +120,7 @@ export default function CompareFlow({
               {options.length > 2 && (
                 <button
                   className={s.remove}
-                  aria-label={`Remove option ${i + 1}`}
+                  aria-label={`移除選項 ${i + 1}`}
                   onClick={() => setOptions(options.filter((_, j) => j !== i))}
                 >
                   ×
@@ -134,7 +134,7 @@ export default function CompareFlow({
             className={s.add}
             onClick={() => setOptions([...options, ""])}
           >
-            + Add another
+            ＋ 再加一個
           </button>
         )}
         <button
@@ -145,13 +145,13 @@ export default function CompareFlow({
             setScreen("criteria");
           }}
         >
-          Help me choose →
+          幫我選 →
         </button>
         <button
           className={s.minor}
-          onClick={() => setOptions(["Seoul", "Tokyo", "Hanoi"])}
+          onClick={() => setOptions(["首爾", "東京", "河內"])}
         >
-          Try an example
+          放範例看看
         </button>
       </section>
     );
@@ -163,8 +163,8 @@ export default function CompareFlow({
           <i style={{ width: `${progress}%` }} />
         </div>
         <DuckBuddy />
-        <h1>What actually matters?</h1>
-        <p className={s.sub}>Pick up to three.</p>
+        <h1>你真正在意什麼？</h1>
+        <p className={s.sub}>最多挑三個。</p>
         <div className={s.cards}>
           {presets.map((p) => (
             <button
@@ -188,10 +188,10 @@ export default function CompareFlow({
             setScreen("rate");
           }}
         >
-          Next →
+          下一步 →
         </button>
         <button className={s.back} onClick={() => setScreen("setup")}>
-          ← Back
+          ← 上一步
         </button>
       </section>
     );
@@ -205,22 +205,22 @@ export default function CompareFlow({
           <i style={{ width: `${progress}%` }} />
         </div>
         <DuckBuddy state="thinking" />
-        <h1>{c.name}.</h1>
+        <h1>{c.name}</h1>
         <p className={s.sub}>
-          {ci + 1} of {criteria.length} · no pretending they're all equal
+          {ci + 1} / {criteria.length} · 別假裝每個都一樣好
         </p>
         <div className={s.group}>
           <Pills
-            label={`How much does ${c.name.toLowerCase()} matter?`}
-            hints={["barely", "a lot"]}
+            label={`${c.name}對你有多重要？`}
+            hints={["還好", "很重要"]}
             value={c.weight}
             onChange={(v) => setCurrent({ weight: v })}
           />
           {clean.map((o, oi) => (
             <Pills
               key={oi}
-              label={`${o} on ${c.name.toLowerCase()}`}
-              hints={["weak", "great"]}
+              label={`${o} 的${c.name}`}
+              hints={["差", "很棒"]}
               value={c.ratings[oi] ?? 3}
               onChange={(v) =>
                 setCurrent({
@@ -236,13 +236,13 @@ export default function CompareFlow({
           className={s.primary}
           onClick={() => (last ? setScreen("thinking") : setCi(ci + 1))}
         >
-          {last ? "Choose for me →" : "Next →"}
+          {last ? "幫我選 →" : "下一步 →"}
         </button>
         <button
           className={s.back}
           onClick={() => (ci ? setCi(ci - 1) : setScreen("criteria"))}
         >
-          ← Back
+          ← 上一步
         </button>
       </section>
     );
@@ -252,7 +252,7 @@ export default function CompareFlow({
     return (
       <section className={s.flow}>
         <DuckBuddy state="thinking" />
-        <p className={s.thinking}>Doing the math…</p>
+        <p className={s.thinking}>算一下…</p>
       </section>
     );
 
@@ -260,9 +260,9 @@ export default function CompareFlow({
     <section className={s.flow}>
       <div className={s.result}>
         <DuckBuddy state="celebrating" />
-        <h1>{winner.name}.</h1>
+        <h1>{winner.name}</h1>
         <p className={s.message}>
-          {winner.score} out of 100, by your own numbers.
+          {winner.score} 分（滿分 100），這是你自己給的分數。
         </p>
         <div className={s.ranking}>
           {results.slice(1).map((r, i) => (
@@ -276,7 +276,7 @@ export default function CompareFlow({
           ))}
         </div>
         <details className={s.details}>
-          <summary>Show the math</summary>
+          <summary>看計算過程</summary>
           {criteria.map((c, i) => (
             <div key={i}>
               <span>
@@ -291,11 +291,11 @@ export default function CompareFlow({
         <button
           className={s.primary}
           onClick={() => {
-            save("⚖️", "Comparison", winner.name, "compare");
+            save("⚖️", "比較結果", winner.name, "compare");
             reset();
           }}
         >
-          Decision made ✓
+          就這麼決定 ✓
         </button>
       </div>
     </section>

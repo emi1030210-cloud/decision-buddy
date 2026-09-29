@@ -16,36 +16,36 @@ const priorities: {
   {
     key: "budget",
     icon: "💰",
-    label: "Budget",
-    sub: "Keep it cheap",
-    question: "Which one’s cheapest?",
+    label: "預算",
+    sub: "便宜就好",
+    question: "哪一個最便宜？",
     duck: "thinking",
     points: 2,
   },
   {
     key: "health",
     icon: "🥗",
-    label: "Health",
-    sub: "Something lighter",
-    question: "Which feels healthiest tonight?",
+    label: "健康",
+    sub: "想吃清爽一點",
+    question: "今天哪一個最健康？",
     duck: "thinking",
     points: 2,
   },
   {
     key: "convenience",
     icon: "🚶",
-    label: "Convenience",
-    sub: "Easy, please",
-    question: "Which one’s easiest to get?",
+    label: "方便",
+    sub: "拜託簡單一點",
+    question: "哪一個最好拿到？",
     duck: "neutral",
     points: 2,
   },
   {
     key: "craving",
     icon: "❤️",
-    label: "Craving",
-    sub: "I want what I want",
-    question: "Be honest... which one are you craving most?",
+    label: "想吃",
+    sub: "我就是想吃那個",
+    question: "老實說…你現在最想吃哪一個？",
     duck: "curious",
     points: 3,
   },
@@ -124,10 +124,10 @@ export default function FoodFlow({
     for (const p of priorities)
       if (wins[p.key] === winner)
         r.push(
-          `${p.icon} ${p.key === "budget" ? "It’s the cheapest" : p.key === "health" ? "It feels healthiest" : p.key === "convenience" ? "It’s easy to get" : "You’re craving it most"}`,
+          `${p.icon} ${p.key === "budget" ? "它最便宜" : p.key === "health" ? "它最健康" : p.key === "convenience" ? "它最方便" : "你最想吃它"}`,
         );
-    if (secret === winner) r.unshift("❤️ You secretly wanted it");
-    if (r.length < 2) r.push("🎲 The duck broke the tie");
+    if (secret === winner) r.unshift("❤️ 你心裡本來就想要它");
+    if (r.length < 2) r.push("🎲 鴨子幫你抽籤決定");
     return r.slice(0, 3);
   }, [winner, wins, secret]);
   if (screen === "setup")
@@ -137,14 +137,14 @@ export default function FoodFlow({
           <i style={{ width: `${progress}%` }} />
         </div>
         <DuckBuddy state="curious" />
-        <h1>What are we choosing between?</h1>
-        <p className={s.sub}>Give me 2–5 options.</p>
+        <h1>在哪幾個之間猶豫？</h1>
+        <p className={s.sub}>給我 2–5 個選項。</p>
         <div className={s.inputs}>
           {options.map((o, i) => (
             <div className={s.inputRow} key={i}>
               <input
-                aria-label={`Food option ${i + 1}`}
-                placeholder={["Subway", "Ramen", "滷味"][i] || "Another option"}
+                aria-label={`選項 ${i + 1}`}
+                placeholder={["牛肉麵", "拉麵", "滷味"][i] || "再一個選項"}
                 value={o}
                 onChange={(e) =>
                   setOptions(
@@ -168,7 +168,7 @@ export default function FoodFlow({
             className={s.add}
             onClick={() => setOptions([...options, ""])}
           >
-            + Add another
+            ＋ 再加一個
           </button>
         )}
         <button
@@ -176,7 +176,7 @@ export default function FoodFlow({
           disabled={clean.length < 2}
           onClick={() => setScreen("priorities")}
         >
-          Help me pick →
+          幫我挑 →
         </button>
       </section>
     );
@@ -187,8 +187,8 @@ export default function FoodFlow({
           <i style={{ width: `${progress}%` }} />
         </div>
         <DuckBuddy />
-        <h1>What matters tonight?</h1>
-        <p className={s.sub}>Pick up to two.</p>
+        <h1>今天在意什麼？</h1>
+        <p className={s.sub}>最多挑兩個。</p>
         <div className={s.cards}>
           {priorities.map((p) => (
             <button
@@ -216,13 +216,13 @@ export default function FoodFlow({
           disabled={!picked.length}
           onClick={() => setScreen("compare")}
         >
-          Next →
+          下一步 →
         </button>
         <button className={s.minor} onClick={() => decide({}, "")}>
-          Honestly, I don’t care
+          老實說我沒差
         </button>
         <button className={s.back} onClick={() => setScreen("setup")}>
-          ← Back
+          ← 上一步
         </button>
       </section>
     );
@@ -234,7 +234,7 @@ export default function FoodFlow({
         </div>
         <DuckBuddy state={current.duck} />
         <h1>{current.question}</h1>
-        <p className={s.sub}>One tap. Don’t overthink it.</p>
+        <p className={s.sub}>點一下就好，別想太多。</p>
         <div className={s.choices}>
           {clean.map((o, i) => (
             <button className={s.choice} key={i} onClick={() => choose(o)}>
@@ -243,17 +243,17 @@ export default function FoodFlow({
             </button>
           ))}
           <button className={s.minor} onClick={() => choose()}>
-            About the same
+            差不多
           </button>
           <button className={s.minor} onClick={() => choose()}>
-            Not sure
+            不確定
           </button>
         </div>
         <button
           className={s.back}
           onClick={() => (ci ? setCi(ci - 1) : setScreen("priorities"))}
         >
-          ← Back
+          ← 上一步
         </button>
       </section>
     );
@@ -261,17 +261,17 @@ export default function FoodFlow({
     return (
       <section className={s.flow}>
         <DuckBuddy state="i-knew-it" />
-        <h1>Okay, gut check.</h1>
-        <p className={s.sub}>Is there one you secretly want?</p>
+        <h1>好，憑直覺。</h1>
+        <p className={s.sub}>有沒有哪一個你偷偷想要？</p>
         <div className={s.choices}>
           <button className={s.choice} onClick={() => setScreen("gutpick")}>
-            ❤️ Yes
+            ❤️ 有
           </button>
           <button className={s.choice} onClick={() => decide(scores, "")}>
-            🤷 Nope
+            🤷 沒有
           </button>
           <button className={s.choice} onClick={() => decide(scores, "")}>
-            🎲 I genuinely don’t care
+            🎲 我是真的沒差
           </button>
         </div>
       </section>
@@ -280,7 +280,7 @@ export default function FoodFlow({
     return (
       <section className={s.flow}>
         <DuckBuddy state="curious" />
-        <h1>Which one?</h1>
+        <h1>哪一個？</h1>
         <div className={s.choices}>
           {clean.map((o, i) => (
             <button
@@ -302,7 +302,7 @@ export default function FoodFlow({
     return (
       <section className={s.flow}>
         <DuckBuddy state="thinking" />
-        <p className={s.thinking}>Hmm...</p>
+        <p className={s.thinking}>嗯…</p>
       </section>
     );
   if (screen === "reject")
@@ -310,12 +310,12 @@ export default function FoodFlow({
       <section className={s.flow}>
         <div className={s.result}>
           <DuckBuddy state="suspicious" />
-          <h1>Oh? 👀</h1>
+          <h1>喔？👀</h1>
           <p className={s.message}>
             That’s useful information. Maybe you already know what you want.
           </p>
           <div className={s.rejectOptions}>
-            <h2>Okay then, what sounds better?</h2>
+            <h2>那你比較想要哪一個？</h2>
             <div className={s.choices}>
               {clean
                 .filter((o) => o !== winner)
@@ -348,16 +348,16 @@ export default function FoodFlow({
       <div className={s.result}>
         <DuckBuddy state="happy" />
         <h1>
-          {emoji(winner)} {winner}.
+          {emoji(winner)} {winner}
         </h1>
-        <p className={s.message}>Yeah. That’s the one tonight.</p>
+        <p className={s.message}>嗯，今天就這個。</p>
         <ul className={s.reasons}>
           {reasons.map((r) => (
             <li key={r}>✓ {r}</li>
           ))}
         </ul>
         <details className={s.details}>
-          <summary>Why this one?</summary>
+          <summary>為什麼是它？</summary>
           {picked.map((k) => (
             <div key={k}>
               <span>{priorities.find((p) => p.key === k)?.label}</span>
@@ -371,7 +371,7 @@ export default function FoodFlow({
           ))}
           {secret && (
             <div>
-              <span>Gut check</span>
+              <span>直覺加分</span>
               <b>+{secret === winner ? 3 : 0}</b>
             </div>
           )}
@@ -380,7 +380,7 @@ export default function FoodFlow({
           <button
             className={s.primary}
             onClick={() => {
-              save("🍜", "Dinner", winner, "food");
+              save("🍜", "今天吃什麼", winner, "food");
               setScreen("setup");
               setScores({});
               setWins({});
@@ -391,10 +391,10 @@ export default function FoodFlow({
               setWinner("");
             }}
           >
-            Sounds good ✓
+            好，就這個 ✓
           </button>
           <button className={s.textAction} onClick={() => setScreen("reject")}>
-            ...I don’t want that
+            …我不想要那個
           </button>
         </div>
       </div>
