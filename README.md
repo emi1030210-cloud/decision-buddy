@@ -30,7 +30,15 @@ The interface is in Traditional Chinese (zh-Hant-TW).
 
 Two rounded typefaces, both self-hosted through `next/font` in `app/layout.tsx` and exposed to CSS as `--font-rounded` and `--font-rounded-tc`: Baloo 2 for Latin, and jf open 粉圓 for Chinese. Baloo 2 carries no CJK, so without the second face Chinese would fall back to the system font and lose the rounded look the whole design rests on. No rounded Traditional Chinese face on Google Fonts is usable here — the Japanese rounded families set punctuation and several glyphs to Japanese conventions, and LXGW WenKai TC renders 為 as the 爲 variant.
 
-`app/fonts/jf-openhuninn-subset.woff2` is subset to the characters this UI can show plus common Chinese, 525 glyphs at 103 KB instead of 11,988 at 4.7 MB. If you add copy with characters outside that set, regenerate it — see `app/fonts/README.md`.
+The Chinese face is split into `unicode-range` chunks under `public/fonts/`, the way Google Fonts serves CJK, and declared in `app/huninn.css`. Chunk 0 holds Latin, punctuation, every character in the app's own copy and a list of everyday Chinese — about 337 KB, and the only one a normal page fetches. The remaining twelve cover the rest of the font and download lazily, so typing 蚵仔煎 into the food flow pulls just the chunks holding those characters.
+
+Splitting purely by codepoint does not work here: common characters end up scattered across every chunk, so one Chinese page pulls all of them. That is why chunk 0 is built from the UI's own text plus `scripts/common-zh.txt`.
+
+Regenerate after adding copy, or to change the font:
+
+```bash
+node scripts/build-font.mjs path/to/jf-openhuninn-2.1.ttf
+```
 
 `components/DecisionBuddy.tsx` is the shell — header, home screen, random picker and history — and hands each guided mode to its own component:
 

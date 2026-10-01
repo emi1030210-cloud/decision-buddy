@@ -1,6 +1,9 @@
 import "./globals.css";
+// jf open 粉圓 (SIL OFL) carries the Chinese — Baloo 2 has no CJK at all. Split into
+// unicode-range chunks so a page downloads only the few it needs, which is how full
+// coverage stays affordable. Regenerate with scripts/build-font.mjs.
+import "./huninn.css";
 import { Baloo_2 } from "next/font/google";
-import localFont from "next/font/local";
 // The old stack was ui-rounded / SF Pro Rounded, so the app only looked rounded on
 // Apple devices and fell back to plain system-ui everywhere else. Self-hosted through
 // next/font: no runtime request to Google, no layout shift. Baloo 2 is round and
@@ -11,15 +14,6 @@ const rounded = Baloo_2({
   subsets: ["latin"],
   variable: "--font-rounded",
   display: "swap",
-});
-// Baloo 2 has no CJK, so Chinese would fall back to the system face and lose the
-// rounded look entirely. jf open 粉圓 is the rounded Traditional Chinese counterpart
-// (SIL OFL). Subset to the 525 characters this UI can show, 4.7 MB down to 103 KB.
-const huninn = localFont({
-  src: "./fonts/jf-openhuninn-subset.woff2",
-  variable: "--font-rounded-tc",
-  display: "swap",
-  weight: "400 900",
 });
 // No share image yet. Drop a 1200x630 app/opengraph-image.png (and the same file as
 // app/twitter-image.png) in and Next picks it up on its own — no code needed here.
@@ -54,10 +48,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="zh-Hant-TW"
-      className={`${rounded.variable} ${huninn.variable}`}
-    >
+    <html lang="zh-Hant-TW" className={rounded.variable}>
       <body>{children}</body>
     </html>
   );
