@@ -26,7 +26,7 @@ const host =
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ??
   (host ? `https://${host}` : "http://localhost:3000");
-const title = "決定夥伴";
+const title = "Decision Buddy";
 const description =
   "還是決定不了？問問你的鴨子夥伴。用輕巧友善的方式，處理那些吃掉你一整天的小決定。";
 export const metadata = {

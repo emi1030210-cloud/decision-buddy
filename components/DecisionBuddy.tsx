@@ -100,7 +100,7 @@ export default function DecisionBuddy() {
     <>
       <header>
         <button className="brand" onClick={() => go("home")}>
-          <Mascot /> <b>決定夥伴</b>
+          <Mascot /> <b>Decision Buddy</b>
         </button>
         <nav>
           <button onClick={() => go("home")}>首頁</button>
@@ -143,7 +143,7 @@ function Home({ go }: { go: (m: Mode) => void }) {
           <Mascot />
           <span>嗨！</span>
         </div>
-        <p className="eyebrow">你口袋裡的決定夥伴</p>
+        <p className="eyebrow">你口袋裡的決定小幫手</p>
         <h1>還是決定不了？</h1>
         <p>沒關係，我就是為了這個存在的。</p>
       </div>
