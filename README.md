@@ -51,6 +51,8 @@ node scripts/build-font.mjs path/to/jf-openhuninn-2.1.ttf
 
 All four share the `DuckBuddy` mascot exported from `BuyFlow.tsx` and ask one screenful of tap targets at a time — no sliders or dropdowns.
 
+`lib/buy-questions.ts` holds the purchase questions and their reason copy, kept out of the component so the tests can check that the two stay in step — `reasonCopy` is keyed by answer label, and a drift there empties the verdict screen's reason list with no error.
+
 `lib/decisions.ts` holds the pure scoring functions — `rankTasks`, `compare`, `scoreBuy` and `scoreFood` — one per mode. The components own the questions, the copy and the duck's reactions; the arithmetic lives in the library.
 
 The app is client-side and requires no authentication or backend.
@@ -72,7 +74,7 @@ Open `http://localhost:3000`. Use `npm run build` to create a production build.
 npm test
 ```
 
-covers the scoring in `lib/decisions.ts` — the thresholds, the tie-break order, the
+covers the scoring in `lib/decisions.ts` and the question tables in `lib/buy-questions.ts` — the thresholds, the tie-break order, the
 weighting that makes a deadline outrank importance. It runs on `node:test` with Node's
 own TypeScript stripping, so there is nothing to install. Stop the dev server before
 `npm run build`: the production output overwrites `.next` and leaves the running dev
