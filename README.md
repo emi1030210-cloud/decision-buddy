@@ -68,6 +68,16 @@ npm run dev
 
 Open `http://localhost:3000`. Use `npm run build` to create a production build.
 
+```bash
+npm test
+```
+
+covers the scoring in `lib/decisions.ts` — the thresholds, the tie-break order, the
+weighting that makes a deadline outrank importance. It runs on `node:test` with Node's
+own TypeScript stripping, so there is nothing to install. Stop the dev server before
+`npm run build`: the production output overwrites `.next` and leaves the running dev
+server unable to find its own chunks.
+
 ## Deploy
 
 Import the repository into Vercel and accept the detected Next.js defaults. No environment variables, database, or paid services are required.
