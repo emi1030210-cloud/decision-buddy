@@ -24,7 +24,9 @@ Every result exposes its reasoning or scoring inputs. All of it lives in `lib/de
 
 ## Architecture
 
-Next.js App Router, React, and TypeScript. Tailwind is installed, but the UI is hand-written CSS: `app/globals.css` for the shell, CSS Modules for the flows.
+Next.js App Router, React, and TypeScript. The UI is hand-written CSS: `app/globals.css` for the shell, CSS Modules for the flows.
+
+Tailwind used to be a dependency, purely for its preflight reset — not one utility class was ever used. It brought seven advisories in through its own build-time dependencies, so the compiled preflight now sits at the top of `app/globals.css` and the package is gone. Rendering is unchanged; it is the same CSS, just no longer generated. Note the heading rule in there: preflight resets `h1`–`h6` to `font-weight: inherit`, which is why the heading weight has to be set explicitly a few lines further down.
 
 The interface is in Traditional Chinese (zh-Hant-TW).
 

@@ -311,9 +311,7 @@ export default function FoodFlow({
         <div className={s.result}>
           <DuckBuddy state="suspicious" />
           <h1>喔？👀</h1>
-          <p className={s.message}>
-            That’s useful information. Maybe you already know what you want.
-          </p>
+          <p className={s.message}>這也是資訊。看來你心裡早就有答案了。</p>
           <div className={s.rejectOptions}>
             <h2>那你比較想要哪一個？</h2>
             <div className={s.choices}>
@@ -337,7 +335,7 @@ export default function FoodFlow({
               className={s.textAction}
               onClick={() => decide(scores, "", winner)}
             >
-              Pick again without this one
+              把它剔除，重新挑一次
             </button>
           </div>
         </div>

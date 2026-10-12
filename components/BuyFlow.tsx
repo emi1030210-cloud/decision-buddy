@@ -243,7 +243,7 @@ export default function BuyFlow({
         ))}
       </div>
       <button className={s.back} onClick={back}>
-        ← Back
+        ← 上一步
       </button>
     </section>
   );
