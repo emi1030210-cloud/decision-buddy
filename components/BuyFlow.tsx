@@ -9,7 +9,12 @@ export type { DuckState };
 
 export function DuckBuddy({ state = "neutral" }: { state?: DuckState }) {
   return (
-    <div className={`${s.duck} ${s[state]}`} aria-label={`鴨子夥伴：${state}`}>
+    // neutral is the plain duck and has no modifier class, so s[state] is undefined
+    // there and the template literal would put the word "undefined" in the DOM.
+    <div
+      className={[s.duck, s[state]].filter(Boolean).join(" ")}
+      aria-label={`鴨子夥伴：${state}`}
+    >
       <i className={s.wing} />
       <i className={s.wing} />
       <b className={s.eye} />
