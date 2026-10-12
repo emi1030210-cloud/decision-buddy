@@ -990,13 +990,6 @@ summary {
   right: -8px;
   transform: rotate(-25deg);
 }
-.mascot em {
-  position: absolute;
-  right: -19px;
-  bottom: -8px;
-  font-size: 22px;
-  font-style: normal;
-}
 .mascot.sus,
 .mascot.caught {
   background: #e9c45f;

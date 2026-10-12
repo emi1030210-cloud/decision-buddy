@@ -47,10 +47,8 @@ const modes = [
 ] as const;
 function Mascot({
   mood = "happy",
-  prop,
 }: {
   mood?: "happy" | "think" | "sus" | "caught" | "sleep";
-  prop?: string;
 }) {
   return (
     <div className={"mascot " + mood} aria-label={`鴨子夥伴：${mood}`}>
@@ -59,7 +57,6 @@ function Mascot({
       <i />
       <i />
       <span aria-hidden="true" />
-      {prop && <em>{prop}</em>}
     </div>
   );
 }
@@ -191,10 +188,7 @@ function Shell({
   return (
     <section className="flow">
       <div className="questionhead">
-        <Mascot
-          mood={tag.toLowerCase().includes("verdict") ? "sus" : "happy"}
-          prop={tag.toLowerCase().includes("buy") ? "🛍️" : undefined}
-        />
+        <Mascot />
         <div>
           <p className="eyebrow">{tag}</p>
           <h1>{title}</h1>
