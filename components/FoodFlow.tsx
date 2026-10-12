@@ -10,6 +10,9 @@ const priorities: {
   label: string;
   sub: string;
   question: string;
+  // 判定畫面上的理由。放在這裡而不是另外寫一串三元判斷，是為了讓
+  // 新增一個 priority 時 TypeScript 直接要求補上，而不是默默套到別人的文案。
+  reason: string;
   duck: DuckState;
   points: number;
 }[] = [
@@ -19,6 +22,7 @@ const priorities: {
     label: "預算",
     sub: "便宜就好",
     question: "哪一個最便宜？",
+    reason: "它最便宜",
     duck: "thinking",
     points: 2,
   },
@@ -28,6 +32,7 @@ const priorities: {
     label: "健康",
     sub: "想吃清爽一點",
     question: "今天哪一個最健康？",
+    reason: "它最健康",
     duck: "thinking",
     points: 2,
   },
@@ -37,6 +42,7 @@ const priorities: {
     label: "方便",
     sub: "拜託簡單一點",
     question: "哪一個最好拿到？",
+    reason: "它最方便",
     duck: "neutral",
     points: 2,
   },
@@ -46,6 +52,7 @@ const priorities: {
     label: "想吃",
     sub: "我就是想吃那個",
     question: "老實說…你現在最想吃哪一個？",
+    reason: "你最想吃它",
     duck: "curious",
     points: 3,
   },
@@ -122,10 +129,7 @@ export default function FoodFlow({
   const reasons = useMemo(() => {
     const r: string[] = [];
     for (const p of priorities)
-      if (wins[p.key] === winner)
-        r.push(
-          `${p.icon} ${p.key === "budget" ? "它最便宜" : p.key === "health" ? "它最健康" : p.key === "convenience" ? "它最方便" : "你最想吃它"}`,
-        );
+      if (wins[p.key] === winner) r.push(`${p.icon} ${p.reason}`);
     if (secret === winner) r.unshift("❤️ 你心裡本來就想要它");
     if (r.length < 2) r.push("🎲 鴨子幫你抽籤決定");
     return r.slice(0, 3);
