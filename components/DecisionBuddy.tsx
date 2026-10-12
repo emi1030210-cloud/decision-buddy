@@ -282,7 +282,9 @@ function RandomMode({ save }: { save: Function }) {
         </>
       ) : (
         <div className={"result " + (spinning ? "spinning" : "")}>
-          <div className="sparkles">✦ · ✧</div>
+          <div className="sparkles" aria-hidden="true">
+            ✦ · ✧
+          </div>
           <Mascot mood={spinning ? "think" : rejected ? "caught" : "happy"} />
           <p>
             {spinning ? "鴨子想一下…" : rejected ? "啊哈！" : "好了，解決。"}

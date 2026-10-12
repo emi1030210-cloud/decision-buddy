@@ -257,7 +257,8 @@
 .rank > span {
   font-variant-numeric: tabular-nums;
   font-weight: 900;
-  color: #9a740e;
+  /* #9a740e only reached 3.79 against the .rank background */
+  color: #846207;
 }
 .focus {
   background: #dfe4cd;

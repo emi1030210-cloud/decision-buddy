@@ -934,6 +934,7 @@ summary {
   border-radius: 11px;
   padding: 9px;
   font-weight: 700;
+  min-height: 44px;
 }
 .empty {
   text-align: center;
