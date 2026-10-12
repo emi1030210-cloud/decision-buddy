@@ -2,6 +2,10 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
+// 跟 build-font.mjs 共用同一份「哪些字會被畫出來」的判定。
+// 兩邊各算各的，就是當初這裡漏掉正規表達式的原因。
+// @ts-expect-error -- .mjs 沒有型別宣告，這裡只需要執行期的值
+import { uiCharacters as allUiCharacters } from "../scripts/ui-text.mjs";
 
 // The Chinese face ships as unicode-range chunks (scripts/build-font.mjs). Chunk 0 is
 // built from the app's own copy plus everyday Chinese and is the only one a normal page
@@ -13,6 +17,7 @@ import { join } from "node:path";
 // the chunking was introduced to fix. So both are checked here rather than noticed later.
 
 const ROOT = join(import.meta.dirname, "..");
+const uiCharacters = (): Set<string> => allUiCharacters(ROOT);
 
 function chunkRanges(): { file: string; has: (cp: number) => boolean }[] {
   const css = readFileSync(join(ROOT, "app/huninn.css"), "utf8");
@@ -28,30 +33,6 @@ function chunkRanges(): { file: string; has: (cp: number) => boolean }[] {
       has: (cp: number) => ranges.some(([a, b]) => cp >= a && cp <= b),
     };
   });
-}
-
-function uiCharacters(): Set<string> {
-  const files = [
-    ...readdirSync(join(ROOT, "components"))
-      .filter((f) => f.endsWith(".tsx"))
-      .map((f) => join("components", f)),
-    "app/layout.tsx",
-    "app/page.tsx",
-    "lib/decisions.ts",
-    "lib/buy-questions.ts",
-  ];
-  const out = new Set<string>();
-  for (const f of files) {
-    // Characters inside a regex are matched against user input, never shown — emoji()
-    // tests for 卤味 and 鸡 so simplified spellings still get an icon. Counting them
-    // would demand font coverage for text the app never renders.
-    const src = readFileSync(join(ROOT, f), "utf8").replace(
-      /\/[^/\n]+\/\.test\(/g,
-      "(",
-    );
-    for (const ch of src) if (ch >= "　" && ch <= "鿿") out.add(ch);
-  }
-  return out;
 }
 
 test("介面用到的字都在第 0 塊裡", () => {

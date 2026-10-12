@@ -15,6 +15,7 @@ import {
   statSync,
 } from "node:fs";
 import { join } from "node:path";
+import { sourceFiles, renderedText } from "./ui-text.mjs";
 
 const src = process.argv[2];
 if (!src) throw new Error("usage: node scripts/build-font.mjs <font.ttf>");
@@ -47,12 +48,10 @@ print(json.dumps(sorted(TTFont(sys.argv[1]).getBestCmap())))
 // pull all of them, which is exactly what this is meant to avoid.
 // Scanned rather than listed: a hardcoded list silently stops covering a file the
 // moment copy moves, which is how lib/buy-questions.ts dropped out of chunk 0.
-const sourceFiles = ["components", "app", "lib"].flatMap((dir) =>
-  readdirSync(dir)
-    .filter((f) => /\.tsx?$/.test(f) && !f.endsWith(".test.ts"))
-    .map((f) => join(dir, f)),
-);
-const uiText = sourceFiles.map((f) => readFileSync(f, "utf8")).join("");
+// Comments and regex literals are stripped by ui-text.mjs — see the note there.
+const uiText = sourceFiles()
+  .map((f) => renderedText(readFileSync(f, "utf8")))
+  .join("");
 const everyday = readFileSync("scripts/common-zh.txt", "utf8");
 const hot = new Set([...(uiText + everyday)].map((c) => c.codePointAt(0)));
 

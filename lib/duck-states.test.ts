@@ -21,7 +21,8 @@ const duckStates = (): string[] => {
   return [...block[1].matchAll(/"([a-z-]+)"/g)].map((m) => m[1]);
 };
 
-const duckCss = () => readFileSync(join(ROOT, "components/BuyFlow.module.css"), "utf8");
+const duckCss = () =>
+  readFileSync(join(ROOT, "components/BuyFlow.module.css"), "utf8");
 
 test("每個鴨子表情都有對應的 CSS", () => {
   const css = duckCss();
@@ -51,7 +52,12 @@ test("程式碼裡用到的表情都在型別裡", () => {
   // 同一個型別，所以這裡順便確認資料表沒有偷渡沒定義的值
   const states = new Set(duckStates());
   const used = new Set<string>();
-  for (const f of ["lib/buy-questions.ts", ...readdirSync(join(ROOT, "components")).filter((f) => f.endsWith(".tsx")).map((f) => join("components", f))]) {
+  for (const f of [
+    "lib/buy-questions.ts",
+    ...readdirSync(join(ROOT, "components"))
+      .filter((f) => f.endsWith(".tsx"))
+      .map((f) => join("components", f)),
+  ]) {
     const src = readFileSync(join(ROOT, f), "utf8");
     for (const m of src.matchAll(/duck:\s*"([a-z-]+)"/g)) used.add(m[1]);
     for (const m of src.matchAll(/state="([a-z-]+)"/g)) used.add(m[1]);
