@@ -4,6 +4,8 @@ import "./globals.css";
 // coverage stays affordable. Regenerate with scripts/build-font.mjs.
 import "./huninn.css";
 import { Baloo_2 } from "next/font/google";
+// Generated alongside the chunks so the hashed filename below is never stale.
+import { CHUNK_0 } from "./huninn-chunk0";
 // The old stack was ui-rounded / SF Pro Rounded, so the app only looked rounded on
 // Apple devices and fell back to plain system-ui everywhere else. Self-hosted through
 // next/font: no runtime request to Google, no layout shift. Baloo 2 is round and
@@ -49,6 +51,24 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-Hant-TW" className={rounded.variable}>
+      <head>
+        {/* next/font preloads Baloo 2 on its own; the Chinese face is a hand-written
+            @font-face, so without this the browser only discovers it after the CSS
+            parses — a whole round trip later, and every character on the page is
+            Chinese. Only chunk 0 is preloaded: it is the one every page needs, and
+            the rest are meant to stay on demand.
+
+            crossOrigin is required even same-origin. Font requests are CORS-mode, so
+            a preload without it is treated as a different request and the file is
+            fetched twice. */}
+        <link
+          rel="preload"
+          as="font"
+          type="font/woff2"
+          href={CHUNK_0}
+          crossOrigin="anonymous"
+        />
+      </head>
       <body>{children}</body>
     </html>
   );

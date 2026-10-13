@@ -82,6 +82,24 @@ test("第 0 塊不該大到失去分塊的意義", () => {
   assert.ok(size < 450 * 1024, `${first} 有 ${Math.round(size / 1024)} KB，太大了`);
 });
 
+test("preload 指向的就是 CSS 裡的第 0 塊", () => {
+  // app/layout.tsx 的 preload 從 huninn-chunk0.ts 拿檔名，那個檔案跟 CSS 都由
+  // build-font.mjs 產生。萬一只重跑了一半，preload 會去抓一個已經不存在的雜湊，
+  // 瀏覽器安靜地丟掉它——字體照樣會載，只是晚一個來回，沒有任何錯誤。
+  const mod = readFileSync(join(ROOT, "app/huninn-chunk0.ts"), "utf8");
+  const declared = /CHUNK_0 = "([^"]+)"/.exec(mod);
+  assert.ok(declared, "huninn-chunk0.ts 裡找不到 CHUNK_0");
+  assert.equal(
+    declared[1],
+    "/fonts/" + chunkRanges()[0].file,
+    "preload 的檔名跟 CSS 第一條 @font-face 對不起來",
+  );
+  assert.ok(
+    readFileSync(join(ROOT, "app/layout.tsx"), "utf8").includes("CHUNK_0"),
+    "layout.tsx 沒有用到產生出來的檔名，大概又寫死了",
+  );
+});
+
 test("每個區塊檔名都帶內容雜湊", () => {
   // next.config.mjs 叫瀏覽器把這些檔案留一年。沒有雜湊的話，換了字體的人
   // 會被舊檔案黏住一年——快取規則的正確性整個建立在檔名上。

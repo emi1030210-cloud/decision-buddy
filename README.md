@@ -57,6 +57,15 @@ from a fast connection, and with `font-display: swap` that is a flash of the fal
 face each time. The rule only matches hashed names: a stable name cached for a year
 would strand anyone on an old font the next time it is rebuilt.
 
+`next/font` preloads Baloo 2 by itself. The Chinese face is a hand-written `@font-face`,
+so the browser would otherwise only discover it once the CSS had parsed — a round trip
+later, on a page where every character is Chinese. `app/layout.tsx` preloads chunk 0 and
+only chunk 0; the rest are supposed to stay on demand. It takes the filename from
+`app/huninn-chunk0.ts`, generated next to the CSS, because a hand-written hash would be
+stale the first time anyone rebuilt the font. The tag needs `crossOrigin` even
+same-origin: font requests are CORS-mode, and without it the preload counts as a
+different request and the file is fetched twice.
+
 Regenerate after adding copy, or to change the font:
 
 ```bash
