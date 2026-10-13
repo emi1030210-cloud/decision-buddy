@@ -99,7 +99,11 @@ holds the purchase questions: a component imports a CSS Module, which `node:test
 parse, so anything left in one cannot be tested.
 
 Stop the dev server before `npm run build`: the production output overwrites `.next`
-and leaves the running dev server unable to find its own chunks.
+and leaves the running dev server unable to find its own chunks, which surfaces as
+`Cannot find module './833.js'` a long way from its cause. A `prebuild` step checks the
+port and refuses rather than letting that happen; it skips itself on CI and on Vercel,
+and fails open, so a bug in the check can never block a deploy. Point it elsewhere with
+`PORT=4000 npm run build` if the dev server is on another port.
 
 ## Deploy
 
