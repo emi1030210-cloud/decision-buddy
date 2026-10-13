@@ -34,7 +34,7 @@ function Pills({
           <button
             key={n}
             className={`${s.pill} ${value === n ? s.on : ""}`}
-            aria-label={`${label}: ${n} of 5`}
+            aria-label={`${label}：${n} 分，滿分 5 分`}
             aria-pressed={value === n}
             onClick={() => onChange(n)}
           >

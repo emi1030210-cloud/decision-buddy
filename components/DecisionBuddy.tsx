@@ -216,17 +216,19 @@ function RandomMode({ save }: { save: Function }) {
   const [winner, setWinner] = useState("");
   const [spinning, setSpinning] = useState(false);
   const [rejected, setRejected] = useState(false);
-  const pick = (list = opts) => {
-    const clean = list.filter(Boolean);
-    if (clean.length < 2) return;
+  // 其他三個流程都是 filter(x => x.trim())，只有這裡是 filter(Boolean)，
+  // 所以只打了空白的選項會被當成有效、還可能被抽中，贏家就印成一片空白。
+  const clean = opts.map((x) => x.trim()).filter(Boolean);
+  const pick = (list = clean) => {
+    if (list.length < 2) return;
     setRejected(false);
     setSpinning(true);
     let n = 0;
     const t = setInterval(() => {
-      setWinner(clean[Math.floor(Math.random() * clean.length)]);
+      setWinner(list[Math.floor(Math.random() * list.length)]);
       if (++n > 10) {
         clearInterval(t);
-        const w = clean[Math.floor(Math.random() * clean.length)];
+        const w = list[Math.floor(Math.random() * list.length)];
         setWinner(w);
         setSpinning(false);
         save("🎲", "隨手一抽", w, "random");
@@ -242,7 +244,11 @@ function RandomMode({ save }: { save: Function }) {
       {!winner ? (
         <>
           <OptionList values={opts} setValues={setOpts} />
-          <button className="primary" onClick={() => pick()}>
+          <button
+            className="primary"
+            disabled={clean.length < 2}
+            onClick={() => pick()}
+          >
             🎲 決定我的命運
           </button>
         </>
@@ -264,7 +270,7 @@ function RandomMode({ save }: { save: Function }) {
               <button
                 className="secondary"
                 onClick={() => {
-                  const n = opts.filter((x) => x !== winner);
+                  const n = clean.filter((x) => x !== winner);
                   setOpts(n);
                   setRejected(true);
                   setTimeout(() => {
