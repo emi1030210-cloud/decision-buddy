@@ -12,9 +12,11 @@ import {
   readFileSync,
   readdirSync,
   rmSync,
+  renameSync,
   statSync,
 } from "node:fs";
 import { join } from "node:path";
+import { createHash } from "node:crypto";
 import { sourceFiles, renderedText } from "./ui-text.mjs";
 
 const src = process.argv[2];
@@ -27,7 +29,7 @@ const CHUNK = 800; // codepoints per chunk
 // the whole directory took the font's licence out of the repo the first time.
 mkdirSync(OUT, { recursive: true });
 for (const f of readdirSync(OUT))
-  if (/^huninn-\d+\.woff2$/.test(f)) rmSync(join(OUT, f));
+  if (/^huninn-\d+(\.[a-f0-9]+)?\.woff2$/.test(f)) rmSync(join(OUT, f));
 
 // every codepoint the font actually covers
 const cps = JSON.parse(
@@ -66,16 +68,23 @@ groups.forEach((g, i) => {
   if (!g.length) return;
   const text = g.map((c) => String.fromCodePoint(c)).join("");
   writeFileSync("/tmp/chunk.txt", text, "utf8");
-  const file = `huninn-${i}.woff2`;
+  const tmp = join(OUT, `.huninn-${i}.tmp.woff2`);
   execFileSync("pyftsubset", [
     src,
     "--text-file=/tmp/chunk.txt",
-    `--output-file=${join(OUT, file)}`,
+    `--output-file=${tmp}`,
     "--flavor=woff2",
     "--layout-features=*",
     "--no-hinting",
     "--desubroutinize",
   ]);
+  // Hash the bytes into the name. Without it these files cannot be cached properly:
+  // the name never changes, so a browser told to keep one for a year would keep a
+  // stale one for a year, and the fallback is revalidating all thirteen on every
+  // page load.
+  const hash = createHash("sha256").update(readFileSync(tmp)).digest("hex").slice(0, 8);
+  const file = `huninn-${i}.${hash}.woff2`;
+  renameSync(tmp, join(OUT, file));
   // collapse consecutive codepoints into ranges so the header stays small
   const ranges = [];
   let start = g[0],
@@ -109,5 +118,5 @@ console.log(
   `  ${faces.length} 個區塊，合計 ${(total / 1024 / 1024).toFixed(1)} MB`,
 );
 console.log(
-  `  第 0 塊（拉丁＋標點，一定會載入）：${(statSync(join(OUT, "huninn-0.woff2")).size / 1024).toFixed(0)} KB`,
+  `  第 0 塊（拉丁＋標點，一定會載入）：${(statSync(join(OUT, readdirSync(OUT).find((f) => /^huninn-0\./.test(f)))).size / 1024).toFixed(0)} KB`,
 );

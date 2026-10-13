@@ -76,6 +76,17 @@ test("CSS 宣告的區塊檔案都存在", () => {
 
 test("第 0 塊不該大到失去分塊的意義", () => {
   // 分塊的重點就是初次載入要小。超過這個數字就該檢討常用字表了。
-  const { size } = statSync(join(ROOT, "public/fonts/huninn-0.woff2"));
-  assert.ok(size < 450 * 1024, `第 0 塊 ${Math.round(size / 1024)} KB，太大了`);
+  // 檔名帶內容雜湊，所以從 CSS 的第一條 @font-face 去拿，不要寫死。
+  const first = chunkRanges()[0].file;
+  const { size } = statSync(join(ROOT, "public/fonts", first));
+  assert.ok(size < 450 * 1024, `${first} 有 ${Math.round(size / 1024)} KB，太大了`);
+});
+
+test("每個區塊檔名都帶內容雜湊", () => {
+  // next.config.mjs 叫瀏覽器把這些檔案留一年。沒有雜湊的話，換了字體的人
+  // 會被舊檔案黏住一年——快取規則的正確性整個建立在檔名上。
+  const wrong = chunkRanges()
+    .map((c) => c.file)
+    .filter((f) => !/^huninn-\d+\.[a-f0-9]{8}\.woff2$/.test(f));
+  assert.deepEqual(wrong, [], "這些檔名沒有雜湊，不該被 immutable 快取");
 });

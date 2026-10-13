@@ -49,6 +49,14 @@ rather than ingredients: half-covered words were the giveaway, 蘿 being present
 absent, so 蘿蔔糕 still cost a chunk.
 Comments in that file must stay ASCII: the build counts every character in it.
 
+Each chunk's filename carries a hash of its own bytes (`huninn-0.cd36d077.woff2`), which
+is what lets `next.config.mjs` serve them `immutable` for a year. Next does this for its
+own build output but serves everything in `public/` as `max-age=0, must-revalidate`, so
+before the hash the font cost a CDN round trip on every single page load — about 40 ms
+from a fast connection, and with `font-display: swap` that is a flash of the fallback
+face each time. The rule only matches hashed names: a stable name cached for a year
+would strand anyone on an old font the next time it is rebuilt.
+
 Regenerate after adding copy, or to change the font:
 
 ```bash
