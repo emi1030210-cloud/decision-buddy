@@ -30,11 +30,13 @@ Tailwind used to be a dependency, purely for its preflight reset — not one uti
 
 The interface is in Traditional Chinese (zh-Hant-TW).
 
-Two rounded typefaces, both self-hosted through `next/font` in `app/layout.tsx` and exposed to CSS as `--font-rounded` and `--font-rounded-tc`: Baloo 2 for Latin, and jf open 粉圓 for Chinese. Baloo 2 carries no CJK, so without the second face Chinese would fall back to the system font and lose the rounded look the whole design rests on. No rounded Traditional Chinese face on Google Fonts is usable here — the Japanese rounded families set punctuation and several glyphs to Japanese conventions, and LXGW WenKai TC renders 為 as the 爲 variant.
+Two rounded typefaces, both self-hosted, loaded differently. Baloo 2 comes through `next/font/google` in `app/layout.tsx` and reaches CSS as `--font-rounded`. jf open 粉圓 is declared by hand in `app/huninn.css` instead, because the chunking below needs thirteen `@font-face` rules sharing one family name, each with its own `unicode-range`, and it is referenced by that family name rather than a variable. The stack in `app/globals.css` is `var(--font-rounded), "huninn", …` — Latin resolves in the first, Chinese falls through to the second. Baloo 2 carries no CJK, so without the second face Chinese would fall back to the system font and lose the rounded look the whole design rests on. No rounded Traditional Chinese face on Google Fonts is usable here — the Japanese rounded families set punctuation and several glyphs to Japanese conventions, and LXGW WenKai TC renders 為 as the 爲 variant.
 
 The Chinese face is split into `unicode-range` chunks under `public/fonts/`, the way Google Fonts serves CJK, and declared in `app/huninn.css`. Chunk 0 holds Latin, punctuation, every character in the app's own copy and a list of everyday Chinese — about 337 KB, and the only one a normal page fetches. The remaining twelve cover the rest of the font and download lazily, so typing 蚵仔煎 into the food flow pulls just the chunks holding those characters.
 
 Splitting purely by codepoint does not work here: common characters end up scattered across every chunk, so one Chinese page pulls all of them. That is why chunk 0 is built from the UI's own text plus `scripts/common-zh.txt`.
+
+What counts as "the UI's own text" is decided in one place, `scripts/ui-text.mjs`, because two things need the same answer and must agree: the build script, and `lib/font-coverage.test.ts`, which checks nothing rendered falls outside chunk 0. It scans `components/`, `app/` and `lib/` and strips comments and regex literals — a Chinese code comment is never painted, and a Chinese character in a regex is matched against what someone types.
 
 Regenerate after adding copy, or to change the font:
 
@@ -76,11 +78,22 @@ Open `http://localhost:3000`. Use `npm run build` to create a production build.
 npm test
 ```
 
-covers the scoring in `lib/decisions.ts` and the question tables in `lib/buy-questions.ts` — the thresholds, the tie-break order, the
-weighting that makes a deadline outrank importance. It runs on `node:test` with Node's
-own TypeScript stripping, so there is nothing to install. Stop the dev server before
-`npm run build`: the production output overwrites `.next` and leaves the running dev
-server unable to find its own chunks.
+runs four files on `node:test` with Node's own TypeScript stripping, so there is
+nothing to install:
+
+| File | What it pins down |
+| --- | --- |
+| `decisions.test.ts` | the thresholds, the tie-break order, the weighting that makes a deadline outrank importance |
+| `buy-questions.test.ts` | every answer has reason copy and vice versa, and the two labels the flow compares by string still exist |
+| `duck-states.test.ts` | every `DuckState` has a CSS class, and no class is left pointing at a state that was renamed |
+| `font-coverage.test.ts` | nothing the app renders falls outside font chunk 0, or outside the font |
+
+The last three exist because each guards a pairing that fails silently: a missing
+reason empties the verdict list, a missing class leaves the duck expressionless, and a
+character outside chunk 0 just costs an extra download. None of them throws.
+
+Stop the dev server before `npm run build`: the production output overwrites `.next`
+and leaves the running dev server unable to find its own chunks.
 
 ## Deploy
 
@@ -90,4 +103,4 @@ Import the repository into Vercel and accept the detected Next.js defaults. No e
 
 MIT — see [LICENSE](LICENSE).
 
-The bundled typeface jf open 粉圓 is licensed separately under the SIL Open Font License 1.1; see `app/fonts/OFL.txt`.
+The bundled typeface jf open 粉圓 is licensed separately under the SIL Open Font License 1.1; see [`public/fonts/OFL.txt`](public/fonts/OFL.txt).
