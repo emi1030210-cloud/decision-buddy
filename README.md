@@ -78,7 +78,7 @@ Open `http://localhost:3000`. Use `npm run build` to create a production build.
 npm test
 ```
 
-runs four files on `node:test` with Node's own TypeScript stripping, so there is
+runs five files on `node:test` with Node's own TypeScript stripping, so there is
 nothing to install:
 
 | File | What it pins down |
@@ -87,10 +87,16 @@ nothing to install:
 | `buy-questions.test.ts` | every answer has reason copy and vice versa, and the two labels the flow compares by string still exist |
 | `duck-states.test.ts` | every `DuckState` has a CSS class, and no class is left pointing at a state that was renamed |
 | `font-coverage.test.ts` | nothing the app renders falls outside font chunk 0, or outside the font |
+| `history.test.ts` | nothing unreadable in `localStorage` reaches React, and `newId` still works without `crypto.randomUUID` |
 
-The last three exist because each guards a pairing that fails silently: a missing
-reason empties the verdict list, a missing class leaves the duck expressionless, and a
-character outside chunk 0 just costs an extra download. None of them throws.
+The last four exist because each guards something that fails quietly or not at all: a
+missing reason empties the verdict list, a missing class leaves the duck expressionless,
+a character outside chunk 0 just costs an extra download, and an unreadable history
+entry takes the whole app down to a blank error page.
+
+`lib/history.ts` holds the `localStorage` layer for the same reason `lib/buy-questions.ts`
+holds the purchase questions: a component imports a CSS Module, which `node:test` cannot
+parse, so anything left in one cannot be tested.
 
 Stop the dev server before `npm run build`: the production output overwrites `.next`
 and leaves the running dev server unable to find its own chunks.

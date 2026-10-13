@@ -4,63 +4,8 @@ import BuyFlow from "./BuyFlow";
 import FoodFlow from "./FoodFlow";
 import TaskFlow from "./TaskFlow";
 import CompareFlow from "./CompareFlow";
-const MODES = [
-  "home",
-  "food",
-  "buy",
-  "tasks",
-  "compare",
-  "random",
-  "history",
-] as const;
-type Mode = (typeof MODES)[number];
-const isMode = (v: unknown): v is Mode => MODES.includes(v as Mode);
-type Entry = {
-  id: string;
-  type: string;
-  title: string;
-  result: string;
-  date: string;
-  mode: Mode;
-};
-const KEY = "buddy-history";
-// Every one of these throws for real: getItem in Safari private mode, JSON.parse on a
-// partial write, setItem on a full quota, randomUUID outside a secure context. Any of
-// them reaching React unhandled takes the whole app down to a blank error page.
-// Parsing successfully says nothing about the shape. An entry whose title is an object
-// rather than a string reaches React as a child it cannot render and takes the app down
-// to the same blank error page — so the fields that get rendered are checked, and
-// anything that would not render is dropped. mode is deliberately not checked here:
-// go() already sends an unrecognised one home, and an otherwise readable entry is
-// still worth showing.
-const RENDERED_FIELDS = ["id", "type", "title", "result", "date"] as const;
-const isEntry = (v: unknown): v is Entry =>
-  typeof v === "object" &&
-  v !== null &&
-  RENDERED_FIELDS.every(
-    (k) => typeof (v as Record<string, unknown>)[k] === "string",
-  );
-const readHistory = (): Entry[] => {
-  try {
-    const raw = localStorage.getItem(KEY);
-    const parsed = raw ? JSON.parse(raw) : [];
-    return Array.isArray(parsed) ? parsed.filter(isEntry) : [];
-  } catch {
-    return [];
-  }
-};
-const writeHistory = (items: Entry[]) => {
-  try {
-    localStorage.setItem(KEY, JSON.stringify(items));
-  } catch {}
-};
-const newId = () => {
-  try {
-    return crypto.randomUUID();
-  } catch {
-    return Date.now().toString(36) + Math.random().toString(36).slice(2);
-  }
-};
+import { KEY, isMode, newId, readHistory, writeHistory } from "@/lib/history";
+import type { Entry, Mode } from "@/lib/history";
 const modes = [
   ["food", "🍜", "今天吃什麼？", "肚子餓而已，怎麼會變這麼複雜。"],
   ["buy", "🛍️", "這個該不該買？", "在我又亂買之前，幫我想一下。"],
