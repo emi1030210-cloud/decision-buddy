@@ -27,11 +27,24 @@ const KEY = "buddy-history";
 // Every one of these throws for real: getItem in Safari private mode, JSON.parse on a
 // partial write, setItem on a full quota, randomUUID outside a secure context. Any of
 // them reaching React unhandled takes the whole app down to a blank error page.
+// Parsing successfully says nothing about the shape. An entry whose title is an object
+// rather than a string reaches React as a child it cannot render and takes the app down
+// to the same blank error page — so the fields that get rendered are checked, and
+// anything that would not render is dropped. mode is deliberately not checked here:
+// go() already sends an unrecognised one home, and an otherwise readable entry is
+// still worth showing.
+const RENDERED_FIELDS = ["id", "type", "title", "result", "date"] as const;
+const isEntry = (v: unknown): v is Entry =>
+  typeof v === "object" &&
+  v !== null &&
+  RENDERED_FIELDS.every(
+    (k) => typeof (v as Record<string, unknown>)[k] === "string",
+  );
 const readHistory = (): Entry[] => {
   try {
     const raw = localStorage.getItem(KEY);
     const parsed = raw ? JSON.parse(raw) : [];
-    return Array.isArray(parsed) ? parsed : [];
+    return Array.isArray(parsed) ? parsed.filter(isEntry) : [];
   } catch {
     return [];
   }
