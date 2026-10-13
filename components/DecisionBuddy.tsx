@@ -4,8 +4,17 @@ import BuyFlow from "./BuyFlow";
 import FoodFlow from "./FoodFlow";
 import TaskFlow from "./TaskFlow";
 import CompareFlow from "./CompareFlow";
-type Mode =
-  "home" | "food" | "buy" | "tasks" | "compare" | "random" | "history";
+const MODES = [
+  "home",
+  "food",
+  "buy",
+  "tasks",
+  "compare",
+  "random",
+  "history",
+] as const;
+type Mode = (typeof MODES)[number];
+const isMode = (v: unknown): v is Mode => MODES.includes(v as Mode);
 type Entry = {
   id: string;
   type: string;
@@ -71,8 +80,11 @@ export default function DecisionBuddy() {
     addEventListener("storage", sync);
     return () => removeEventListener("storage", sync);
   }, []);
+  // 紀錄裡的 mode 是從 localStorage 讀回來的，型別標成 Mode 不代表它真的是——
+  // 舊的一筆、改過名的一個模式、或手動編輯過的值都會進到這裡。認不得就回首頁，
+  // 總比把人丟在空白畫面上好。
   const go = (m: Mode) => {
-    setMode(m);
+    setMode(isMode(m) ? m : "home");
     scrollTo(0, 0);
   };
   const save = (type: string, title: string, result: string, m: Mode) => {
@@ -93,6 +105,26 @@ export default function DecisionBuddy() {
     setHistory(next);
     writeHistory(next);
   };
+  // Record<Mode, …> 讓「新增一個模式卻忘了接畫面」變成編譯錯誤，而不是空白頁。
+  const screens: Record<Mode, () => React.ReactNode> = {
+    home: () => <Home go={go} />,
+    random: () => <RandomMode save={save} />,
+    buy: () => <BuyMode save={save} />,
+    food: () => <FoodMode save={save} />,
+    tasks: () => <TaskMode save={save} />,
+    compare: () => <CompareMode save={save} />,
+    history: () => (
+      <History
+        items={history}
+        go={go}
+        remove={(id) => {
+          const n = readHistory().filter((x) => x.id !== id);
+          setHistory(n);
+          writeHistory(n);
+        }}
+      />
+    ),
+  };
   return (
     <>
       <header>
@@ -106,25 +138,7 @@ export default function DecisionBuddy() {
           </button>
         </nav>
       </header>
-      <main>
-        {mode === "home" && <Home go={go} />}{" "}
-        {mode === "random" && <RandomMode save={save} />}{" "}
-        {mode === "buy" && <BuyMode save={save} />}{" "}
-        {mode === "food" && <FoodMode save={save} />}{" "}
-        {mode === "tasks" && <TaskMode save={save} />}{" "}
-        {mode === "compare" && <CompareMode save={save} />}{" "}
-        {mode === "history" && (
-          <History
-            items={history}
-            go={go}
-            remove={(id) => {
-              const n = readHistory().filter((x) => x.id !== id);
-              setHistory(n);
-              writeHistory(n);
-            }}
-          />
-        )}
-      </main>
+      <main>{(screens[mode] ?? screens.home)()}</main>
       <footer>只處理小事。人生大事還是你自己的。</footer>
     </>
   );
