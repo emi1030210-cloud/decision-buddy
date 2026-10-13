@@ -32,7 +32,7 @@ The interface is in Traditional Chinese (zh-Hant-TW).
 
 Two rounded typefaces, both self-hosted, loaded differently. Baloo 2 comes through `next/font/google` in `app/layout.tsx` and reaches CSS as `--font-rounded`. jf open 粉圓 is declared by hand in `app/huninn.css` instead, because the chunking below needs thirteen `@font-face` rules sharing one family name, each with its own `unicode-range`, and it is referenced by that family name rather than a variable. The stack in `app/globals.css` is `var(--font-rounded), "huninn", …` — Latin resolves in the first, Chinese falls through to the second. Baloo 2 carries no CJK, so without the second face Chinese would fall back to the system font and lose the rounded look the whole design rests on. No rounded Traditional Chinese face on Google Fonts is usable here — the Japanese rounded families set punctuation and several glyphs to Japanese conventions, and LXGW WenKai TC renders 為 as the 爲 variant.
 
-The Chinese face is split into `unicode-range` chunks under `public/fonts/`, the way Google Fonts serves CJK, and declared in `app/huninn.css`. Chunk 0 holds Latin, punctuation, every character in the app's own copy and a list of everyday Chinese — about 337 KB, and the only one a normal page fetches. The remaining twelve cover the rest of the font and download lazily, so typing 蚵仔煎 into the food flow pulls just the chunks holding those characters.
+The Chinese face is split into `unicode-range` chunks under `public/fonts/`, the way Google Fonts serves CJK, and declared in `app/huninn.css`. Chunk 0 holds Latin, punctuation, every character in the app's own copy and a list of everyday Chinese — about 365 KB, and the only one a normal page fetches. The remaining twelve cover the rest of the font and download lazily, so a character outside it — say the 甕 of 甕仔雞 — pulls just the chunk holding it.
 
 Splitting purely by codepoint does not work here: common characters end up scattered across every chunk, so one Chinese page pulls all of them. That is why chunk 0 is built from the UI's own text plus `scripts/common-zh.txt`.
 
@@ -41,13 +41,13 @@ What counts as "the UI's own text" is decided in one place, `scripts/ui-text.mjs
 `scripts/common-zh.txt` carries a general frequency list plus food vocabulary. The
 second half is there because the only free text most people type into this app is a dish
 name, and a general list does not cover those: before it was added, typing 豆腐 pulled
-359 KB of extra chunks onto a page whose entire first load is 337 KB, while the
-placeholder 牛肉麵 pulled nothing — which is why it went unnoticed. Comments in that file
-must stay ASCII: the build counts every character in it.
-
-**`public/fonts/` is currently behind that list by 106 characters.** Regenerating needs
-the upstream `.ttf`, which is not in the repo. Until someone reruns the command below,
-those characters still cost an extra chunk.
+359 KB of extra chunks onto a page whose entire first load was 337 KB, while the
+placeholder 牛肉麵 pulled nothing — which is why it went unnoticed. Adding the vocabulary
+put 28 KB on chunk 0 and took every one of 84 common dish names down to nothing extra —
+豆腐, 水餃, 珍珠奶茶, 蚵仔煎, 小籠包, 佛跳牆. The second pass came from checking dish names
+rather than ingredients: half-covered words were the giveaway, 蘿 being present and 蔔
+absent, so 蘿蔔糕 still cost a chunk.
+Comments in that file must stay ASCII: the build counts every character in it.
 
 Regenerate after adding copy, or to change the font:
 

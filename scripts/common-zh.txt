@@ -8,3 +8,7 @@
 # Comments here must stay ASCII apart from examples already in chunk 0: build-font.mjs
 # takes every character in this file, so a Chinese comment would silently enlarge it.
 飯麵粉粥湯鍋餅糕包捲串餃餛飩粿粽糉羹燥臊豬牛羊雞鴨鵝魚蝦蟹蛤蚵魷鱈鮭鮪貝蔘排腸肚肝丸筋腩腱里肌培根火腿蔬菜菇菌蔥薑蒜椒筍茄瓜豆腐乾皮絲塊片丁末芋薯藕蓮籽仁芽韭芹菠蘿萵苣蕈糖鹽醋醬油辣鹹酸甜苦麻香滷魯燉炸煎炒煮蒸烤燴燙拌涼熱溫辛嫩脆酥焦珍珠奶茶咖啡哩冰淇淋凍布酪蜜豆花仙草愛玉綠紅烏龍拿鐵可樂汽水果汁臭鐵蚵仔煎滷味鹽酥雞碗粿肉圓刈割米血糯漿餡攤夜市便當飲料小吃早午晚餐宵份碗盤杯支根條塊顆粒串盒袋包罐瓶
+# Second pass: characters still missing after checking 84 real dish names, rather than
+# ingredients alone. Half-covered words were the giveaway - 蘿 was in, 蔔 was not, so
+# 蘿蔔糕 still paid for a chunk.
+籠貼糰婆宮骨斬坡獅佛跳牆爐貢蜊蔔苔球胡輪刨芒青檸檬蓋波霸頌漢堡披薩丼婦泡陽
