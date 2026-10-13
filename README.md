@@ -38,6 +38,17 @@ Splitting purely by codepoint does not work here: common characters end up scatt
 
 What counts as "the UI's own text" is decided in one place, `scripts/ui-text.mjs`, because two things need the same answer and must agree: the build script, and `lib/font-coverage.test.ts`, which checks nothing rendered falls outside chunk 0. It scans `components/`, `app/` and `lib/` and strips comments and regex literals — a Chinese code comment is never painted, and a Chinese character in a regex is matched against what someone types.
 
+`scripts/common-zh.txt` carries a general frequency list plus food vocabulary. The
+second half is there because the only free text most people type into this app is a dish
+name, and a general list does not cover those: before it was added, typing 豆腐 pulled
+359 KB of extra chunks onto a page whose entire first load is 337 KB, while the
+placeholder 牛肉麵 pulled nothing — which is why it went unnoticed. Comments in that file
+must stay ASCII: the build counts every character in it.
+
+**`public/fonts/` is currently behind that list by 106 characters.** Regenerating needs
+the upstream `.ttf`, which is not in the repo. Until someone reruns the command below,
+those characters still cost an extra chunk.
+
 Regenerate after adding copy, or to change the font:
 
 ```bash
