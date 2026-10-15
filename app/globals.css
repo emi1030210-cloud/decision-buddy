@@ -772,6 +772,20 @@ footer {
   margin: 16px 0;
   box-shadow: 0 5px 0 var(--shadow);
 }
+/* These were written for <button>, which is inline-block by default, so min-height
+   works. On an <a> — the 404 page's way back — the default is inline, vertical padding
+   does not affect layout and min-height is ignored outright: the same markup came out
+   29px tall instead of 51, under the 44px tap target used everywhere else. Scoped to
+   anchors on purpose. Setting display on the shared rule would turn .add from block
+   into an inline box and lose its full width. */
+a.primary,
+a.secondary,
+a.add {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
 .primary,
 .secondary,
 .add {

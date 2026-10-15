@@ -4,6 +4,7 @@ import BuyFlow from "./BuyFlow";
 import FoodFlow from "./FoodFlow";
 import TaskFlow from "./TaskFlow";
 import CompareFlow from "./CompareFlow";
+import { Mascot } from "./Mascot";
 import { KEY, isMode, newId, readHistory, writeHistory } from "@/lib/history";
 import type { Entry, Mode } from "@/lib/history";
 const modes = [
@@ -12,21 +13,6 @@ const modes = [
   ["tasks", "🔥", "先做哪一件？", "每件事都很急。應該沒有吧。"],
   ["compare", "⚖️", "幫我選一個", "選項有點多。是真的有點多。"],
 ] as const;
-function Mascot({
-  mood = "happy",
-}: {
-  mood?: "happy" | "think" | "sus" | "caught" | "sleep";
-}) {
-  return (
-    <div className={"mascot " + mood} aria-label={`鴨子夥伴：${mood}`}>
-      <b className="arm left" />
-      <b className="arm right" />
-      <i />
-      <i />
-      <span aria-hidden="true" />
-    </div>
-  );
-}
 export default function DecisionBuddy() {
   const [mode, setMode] = useState<Mode>("home");
   const [history, setHistory] = useState<Entry[]>([]);

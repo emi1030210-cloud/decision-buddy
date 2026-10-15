@@ -87,6 +87,20 @@ All four share the `DuckBuddy` mascot exported from `BuyFlow.tsx` and ask one sc
 
 `lib/decisions.ts` holds the pure scoring functions — `rankTasks`, `compare`, `scoreBuy` and `scoreFood` — one per mode. The components own the questions, the copy and the duck's reactions; the arithmetic lives in the library.
 
+`app/not-found.tsx` and `app/error.tsx` are the two screens nobody is supposed to see.
+Without them an unknown path gets Next's built-in 404 — a bare white page reading "This
+page could not be found" in English, on an app that is otherwise entirely in Chinese —
+and any unhandled render error gets "Application error: a client-side exception has
+occurred" on a blank page with no way back. Both now render in the app's own shell with
+the duck and a route home. The error screen also offers to clear the saved history,
+because the usual cause of a crash is something unreadable sitting in `localStorage`, and
+re-rendering alone would walk straight back into it; it says what it deletes rather than
+calling itself a reset. Errors thrown by the root layout itself are not covered — that
+needs `global-error.tsx`, which has to carry its own `<html>` and `<body>`.
+
+`components/Mascot.tsx` is split out for those two: importing it from
+`DecisionBuddy.tsx` would pull all four flows into the error page's bundle.
+
 The app is client-side and requires no authentication or backend.
 
 The browser tab icon is `app/icon.svg`. There is no social share image yet: drop a 1200x630 `app/opengraph-image.png` into `app/` (and the same file as `app/twitter-image.png`) and Next will serve it and emit the `og:image` tags automatically. Set `NEXT_PUBLIC_SITE_URL` if you want those URLs pinned to a custom domain rather than Vercel's.
