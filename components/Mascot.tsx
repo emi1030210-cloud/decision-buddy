@@ -7,7 +7,11 @@ export function Mascot({
   mood?: "happy" | "think" | "sus" | "caught" | "sleep";
 }) {
   return (
-    <div className={"mascot " + mood} aria-label={`鴨子夥伴：${mood}`}>
+    // The duck is decoration: whatever it is doing is always said in the text beside
+    // it, so announcing it adds noise. It was also leaking an English identifier into
+    // a Chinese interface — "鴨子夥伴：sleep" — and in the header it landed in front of
+    // the wordmark, so that button announced as "鴨子夥伴：happy Decision Buddy".
+    <div className={"mascot " + mood} aria-hidden="true">
       <b className="arm left" />
       <b className="arm right" />
       <i />

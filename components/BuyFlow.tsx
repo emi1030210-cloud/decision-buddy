@@ -11,9 +11,11 @@ export function DuckBuddy({ state = "neutral" }: { state?: DuckState }) {
   return (
     // neutral is the plain duck and has no modifier class, so s[state] is undefined
     // there and the template literal would put the word "undefined" in the DOM.
+    // Decoration, like the shell's Mascot: the reaction text beside it says the same
+    // thing, and the label was announcing the internal state name in English.
     <div
       className={[s.duck, s[state]].filter(Boolean).join(" ")}
-      aria-label={`鴨子夥伴：${state}`}
+      aria-hidden="true"
     >
       <i className={s.wing} />
       <i className={s.wing} />
