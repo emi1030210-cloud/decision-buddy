@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import BuyFlow from "./BuyFlow";
 import FoodFlow from "./FoodFlow";
 import TaskFlow from "./TaskFlow";
@@ -205,15 +205,33 @@ function RandomMode({ save }: { save: Function }) {
   // 其他三個流程都是 filter(x => x.trim())，只有這裡是 filter(Boolean)，
   // 所以只打了空白的選項會被當成有效、還可能被抽中，贏家就印成一片空白。
   const clean = opts.map((x) => x.trim()).filter(Boolean);
+  // The spin runs on an interval that nothing owned, which cost two entries in the
+  // history each time:
+  //
+  // A second click landed before the first tick swapped the screen 70ms later, so two
+  // intervals ran and both saved — measured as a duplicate at every gap up to 60ms,
+  // which is an ordinary double click and an ordinary double tap.
+  //
+  // And leaving mid-spin did not stop it: the interval kept running and saved a result
+  // nobody stayed to see.
+  //
+  // A ref rather than the spinning state, because state does not update until the next
+  // render and both clicks of a double click are handled before that.
+  const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+  const stop = () => {
+    if (timer.current) clearInterval(timer.current);
+    timer.current = null;
+  };
+  useEffect(() => stop, []);
   const pick = (list = clean) => {
-    if (list.length < 2) return;
+    if (timer.current || list.length < 2) return;
     setRejected(false);
     setSpinning(true);
     let n = 0;
-    const t = setInterval(() => {
+    timer.current = setInterval(() => {
       setWinner(list[Math.floor(Math.random() * list.length)]);
       if (++n > 10) {
-        clearInterval(t);
+        stop();
         const w = list[Math.floor(Math.random() * list.length)];
         setWinner(w);
         setSpinning(false);
