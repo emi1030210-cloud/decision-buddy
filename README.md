@@ -83,6 +83,13 @@ node scripts/build-font.mjs path/to/jf-openhuninn-2.1.ttf
 
 All four share the `DuckBuddy` mascot exported from `BuyFlow.tsx` and ask one screenful of tap targets at a time — no sliders or dropdowns.
 
+The purchase flow's first screen is the only `<form>` in the app, so that Enter in
+either labelled field continues the way it does on every other site. Its submit button
+keeps the `!item || !price` guard and the browser refuses implicit submission while that
+button is disabled, so one condition covers both the click and the keypress. The other
+setup screens are lists of options with their own add and remove buttons, where Enter
+could as reasonably mean "add another one", so they are left as they are.
+
 `lib/buy-questions.ts` holds the purchase questions and their reason copy, kept out of the component so the tests can check that the two stay in step — `reasonCopy` is keyed by answer label, and a drift there empties the verdict screen's reason list with no error.
 
 `lib/decisions.ts` holds the pure scoring functions — `rankTasks`, `compare`, `scoreBuy` and `scoreFood` — one per mode. The components own the questions, the copy and the duck's reactions; the arithmetic lives in the library.

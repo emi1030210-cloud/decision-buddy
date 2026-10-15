@@ -97,7 +97,19 @@ export default function BuyFlow({
         <DuckBuddy state="curious" />
         <h1 className={s.question}>好，我們在考慮買什麼？</h1>
         <p className={s.helper}>先不批評你。目前啦。</p>
-        <div className={s.setup}>
+        {/* A real form, so Enter in either field continues the way it does everywhere
+            else on the web. There is nothing to post: onSubmit just advances, and the
+            browser already refuses to submit implicitly while the submit button is
+            disabled, so the same `!item || !price` guard covers both paths without
+            being written twice. The list screens are deliberately left alone — there
+            Enter could as easily mean "add another option". */}
+        <form
+          className={s.setup}
+          onSubmit={(e) => {
+            e.preventDefault();
+            setScreen("questions");
+          }}
+        >
           <label className={s.field}>
             品名
             <input
@@ -116,14 +128,10 @@ export default function BuyFlow({
               onChange={(e) => setPrice(e.target.value)}
             />
           </label>
-          <button
-            className={s.cta}
-            disabled={!item || !price}
-            onClick={() => setScreen("questions")}
-          >
+          <button type="submit" className={s.cta} disabled={!item || !price}>
             來聊聊這個 →
           </button>
-        </div>
+        </form>
       </section>
     );
   if (screen === "thinking")
